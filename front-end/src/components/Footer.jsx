@@ -10,7 +10,7 @@ const Footer = () => {
 					<a
 						href='https://twitter.com/RodrigoSubash'
 						rel='noopener noreferrer'
-						class='text-blue-400 ml-1'
+						className='text-blue-400 ml-1'
 						target='_blank'
 					>
 						SubashRandika
