@@ -6,7 +6,9 @@ const App = () => {
 	return (
 		<>
 			<Header />
-			<h1>Welcome to Oritsy Shop</h1>
+			<div className='h-1/2'>
+				<h1>Welcome to Oritsy Shop</h1>
+			</div>
 			<Footer />
 		</>
 	);
