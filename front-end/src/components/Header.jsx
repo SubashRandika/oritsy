@@ -17,7 +17,7 @@ const Header = () => {
 				</div>
 				<div className='flex-grow'></div>
 				<div className='flex items-center flex-none'>
-					<button className='flex items-center bg-red-400 rounded-full font-bold text-white px-6 py-2 focus:outline-none transition duration-300 ease-in-out hover:bg-red-500 mr-5'>
+					<button className='flex items-center bg-gradient-to-r from-yellow-300 to-red-400 text-white font-semibold uppercase px-6 py-2 mr-5 focus:outline-none shadow-md hover:shadow-lg transition duration-300 ease-in-out'>
 						<span className='mr-2'>Sign in</span>
 						<span className='text-xl'>
 							<FiLogIn />
