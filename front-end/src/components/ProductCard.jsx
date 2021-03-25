@@ -3,14 +3,14 @@ import { GiShoppingCart } from 'react-icons/gi';
 
 const ProductCard = ({ product }) => {
 	return (
-		<div className='w-full max-w-sm mx-auto overflow-hidden'>
-			<div
-				className='flex items-end justify-end h-56 w-full bg-cover'
-				style={{
-					backgroundImage: `url('${product.image}')`
-				}}
-			>
-				<button className='p-2 rounded-full bg-yellow-500 text-white mx-5 -mb-4 hover:bg-red-400 focus:outline-none focus:bg-red-400'>
+		<div className='shadow-sm overflow-hidden border border-gray-200 cursor-pointer transition-shadow duration-500 transform hover:shadow-md'>
+			<div className='flex items-end justify-end relative overflow-hidden h-56'>
+				<img
+					className='absolute w-full max-h-56 bg-cover transition-all duration-700 ease-in-out transform hover:scale-110'
+					src={product.image}
+					alt='Product'
+				/>
+				<button className='relative p-2 rounded-full bg-yellow-500 text-white mx-3 hover:bg-red-400 focus:outline-none mb-2'>
 					<span className='text-3xl'>
 						<GiShoppingCart />
 					</span>
