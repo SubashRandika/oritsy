@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { GiShoppingCart } from 'react-icons/gi';
 import Rating from './Rating';
 
@@ -36,6 +37,10 @@ const ProductCard = ({ product }) => {
 			</div>
 		</div>
 	);
+};
+
+ProductCard.propTypes = {
+	product: PropTypes.object.isRequired
 };
 
 export default ProductCard;
