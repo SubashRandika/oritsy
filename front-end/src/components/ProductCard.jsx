@@ -1,11 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { GiShoppingCart } from 'react-icons/gi';
 import Rating from './Rating';
 
 const ProductCard = ({ product }) => {
 	return (
-		<div className='shadow-sm overflow-hidden border border-gray-200 cursor-pointer transition-shadow duration-500 transform hover:shadow-md'>
+		<Link
+			className='shadow-sm overflow-hidden border border-gray-200 transition-shadow duration-500 transform hover:shadow-md'
+			to={`/product/${product._id}`}
+		>
 			<div className='flex items-end justify-end relative overflow-hidden h-56'>
 				<img
 					className='absolute w-full max-h-56 p-4 object-contain transition-all duration-1000 ease-in-out transform hover:scale-110'
@@ -35,7 +39,7 @@ const ProductCard = ({ product }) => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 
