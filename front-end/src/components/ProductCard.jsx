@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
 		<div className='shadow-sm overflow-hidden border border-gray-200 cursor-pointer transition-shadow duration-500 transform hover:shadow-md'>
 			<div className='flex items-end justify-end relative overflow-hidden h-56'>
 				<img
-					className='absolute w-full max-h-56 bg-cover transition-all duration-700 ease-in-out transform hover:scale-110'
+					className='absolute w-full max-h-56 bg-cover transition-all duration-1000 ease-in-out transform hover:scale-110'
 					src={product.image}
 					alt='Product'
 				/>
