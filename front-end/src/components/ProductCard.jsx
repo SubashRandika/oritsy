@@ -7,12 +7,12 @@ import Rating from './Rating';
 const ProductCard = ({ product }) => {
 	return (
 		<Link
-			className='shadow-sm overflow-hidden border border-gray-200 transition-shadow duration-500 transform hover:shadow-md'
+			className='group shadow-sm overflow-hidden border border-gray-200 transition-shadow duration-500 transform hover:shadow-md'
 			to={`/product/${product._id}`}
 		>
 			<div className='flex items-end justify-end relative overflow-hidden h-56'>
 				<img
-					className='absolute w-full max-h-56 p-4 object-contain transition-all duration-1000 ease-in-out transform hover:scale-110'
+					className='absolute w-full max-h-56 p-5 object-contain transition-all duration-1000 ease-in-out transform group-hover:scale-110'
 					src={product.image}
 					alt='Product'
 				/>
