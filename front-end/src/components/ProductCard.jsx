@@ -1,12 +1,13 @@
 import React from 'react';
 import { GiShoppingCart } from 'react-icons/gi';
+import Rating from './Rating';
 
 const ProductCard = ({ product }) => {
 	return (
 		<div className='shadow-sm overflow-hidden border border-gray-200 cursor-pointer transition-shadow duration-500 transform hover:shadow-md'>
 			<div className='flex items-end justify-end relative overflow-hidden h-56'>
 				<img
-					className='absolute w-full max-h-56 bg-cover transition-all duration-1000 ease-in-out transform hover:scale-110'
+					className='absolute w-full max-h-56 p-4 object-contain transition-all duration-1000 ease-in-out transform hover:scale-110'
 					src={product.image}
 					alt='Product'
 				/>
@@ -24,46 +25,12 @@ const ProductCard = ({ product }) => {
 						{product.price}
 					</span>
 					<div className='flex flex-col items-center mt-1'>
-						<div className='flex'>
-							<svg
-								className='w-4 h-4 fill-current text-yellow-500'
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 20 20'
-							>
-								<path d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' />
-							</svg>
-							<svg
-								className='w-4 h-4 fill-current text-yellow-500'
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 20 20'
-							>
-								<path d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' />
-							</svg>
-							<svg
-								className='w-4 h-4 fill-current text-yellow-500'
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 20 20'
-							>
-								<path d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' />
-							</svg>
-							<svg
-								className='w-4 h-4 fill-current text-yellow-500'
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 20 20'
-							>
-								<path d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' />
-							</svg>
-							<svg
-								className='w-4 h-4 fill-current text-gray-300'
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 20 20'
-							>
-								<path d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' />
-							</svg>
-						</div>
-						<div className='text-gray-500 my-2'>
-							{product.numReviews} reviews
-						</div>
+						<Rating
+							value={product.rating}
+							text={`${product.numReviews} reviews`}
+							ratingStyle={`text-yellow-500 text-lg`}
+							textStyle={`text-gray-500 my-2`}
+						/>
 					</div>
 				</div>
 			</div>
