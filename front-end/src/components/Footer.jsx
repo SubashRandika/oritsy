@@ -18,7 +18,7 @@ const Footer = () => {
 				</p>
 				<span className='inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start'>
 					<a
-						className='text-gray-500 text-xl mr-2 hover:text-blue-800'
+						className='text-gray-500 text-xl mr-2 hover:text-facebook transition duration-500 ease-in-out transform hover:scale-125'
 						href='https://www.facebook.com/subash.rodrigo'
 						rel='noopener noreferrer'
 						target='_blank'
@@ -26,7 +26,7 @@ const Footer = () => {
 						<FaFacebookF />
 					</a>
 					<a
-						className='text-gray-500 text-xl mr-2 hover:text-blue-300'
+						className='text-gray-500 text-xl mr-2 hover:text-twitter transition duration-500 ease-in-out transform hover:scale-125'
 						href='https://twitter.com/RodrigoSubash'
 						rel='noopener noreferrer'
 						target='_blank'
@@ -34,7 +34,7 @@ const Footer = () => {
 						<FaTwitter />
 					</a>
 					<a
-						className='text-gray-500 text-xl mr-2 hover:text-blue-500'
+						className='text-gray-500 text-xl mr-2 hover:text-linkedin transition duration-500 ease-in-out transform hover:scale-125'
 						href='https://www.linkedin.com/in/subash-rodrigo-23467762/'
 						rel='noopener noreferrer'
 						target='_blank'
@@ -42,7 +42,7 @@ const Footer = () => {
 						<FaLinkedinIn />
 					</a>
 					<a
-						className='text-gray-500 text-xl hover:text-gray-800'
+						className='text-gray-500 text-xl hover:text-github transition duration-500 ease-in-out transform hover:scale-125'
 						href='https://github.com/SubashRandika'
 						rel='noopener noreferrer'
 						target='_blank'
