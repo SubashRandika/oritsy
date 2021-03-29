@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
-import { FaFacebook, FaTwitter, FaPinterest, FaCartPlus } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import products from '../products';
 import Rating from '../components/Rating';
 
