@@ -19,7 +19,7 @@ const Header = () => {
 				<div className='flex-grow'></div>
 				<div className='flex items-center flex-none'>
 					<Link
-						className='flex items-center bg-gradient-to-r from-yellow-300 to-red-400 text-white font-semibold uppercase px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+						className='flex items-center bg-gradient-to-r from-yellow-400 to-red-400 text-white font-semibold uppercase px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
 						to='/signin'
 					>
 						<span className='mr-2'>Sign in</span>
