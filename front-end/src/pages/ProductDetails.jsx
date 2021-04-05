@@ -20,7 +20,7 @@ const ProductDetails = () => {
 						alt='Product'
 					/>
 				</div>
-				<div className='flex flex-col w-1/2'>
+				<div className='flex flex-col w-1/2 px-5'>
 					<h2 className='text-md title-font text-gray-500 tracking-widest uppercase'>
 						{product.brand}
 					</h2>
