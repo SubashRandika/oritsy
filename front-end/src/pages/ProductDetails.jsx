@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
 import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
-import products from '../products';
 import Rating from '../components/Rating';
 
 const ProductDetails = () => {
+	const [product, setProduct] = useState({});
 	const { id } = useParams();
-	const product = products.find((product) => product._id === id);
+
+	useEffect(() => {
+		const getProductById = async () => {
+			const { data } = await axios.get(`/api/products/${id}`);
+			setProduct(data);
+		};
+
+		getProductById();
+	}, [id]);
 
 	return (
 		<main className='container m-auto py-16'>

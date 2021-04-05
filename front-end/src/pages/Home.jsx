@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import ProductCard from '../components/ProductCard';
-import products from '../products';
 
 const Home = () => {
+	const [products, setProducts] = useState([]);
+
+	useEffect(() => {
+		const getAllProducts = async () => {
+			const { data } = await axios.get('/api/products');
+			setProducts(data);
+		};
+
+		getAllProducts();
+	}, []);
+
 	return (
 		<main className='container m-auto py-4'>
 			<h1 className='text-2xl font-semibold'>Latest Products</h1>
