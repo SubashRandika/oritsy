@@ -1,0 +1,23 @@
+{
+	"name": "oritsy",
+	"version": "1.0.0",
+	"description": "One stop shop for homemade, vintage, and unique hand crafted products for the cheapest prices.",
+	"main": "server.js",
+	"scripts": {
+		"start": "node back-end/server"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SubashRandika/oritsy.git"
+	},
+	"keywords": [],
+	"author": "Randika Rodrigo",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/SubashRandika/oritsy/issues"
+	},
+	"homepage": "https://github.com/SubashRandika/oritsy#readme",
+	"dependencies": {
+		"express": "^4.17.1"
+	}
+}
