@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "One stop shop for homemade, vintage, and unique hand crafted products for the cheapest prices.",
 	"main": "server.js",
+	"type": "module",
 	"scripts": {
 		"start": "node back-end/server",
 		"server": "nodemon back-end/server",
