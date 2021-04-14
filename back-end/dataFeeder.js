@@ -43,7 +43,7 @@ const deleteData = async () => {
 		await Product.deleteMany();
 		await User.deleteMany();
 
-		console.log(`Data Deleted Successfully`.green.inverse);
+		console.log(`Data Deleted Successfully`.yellow.inverse);
 		process.exit();
 	} catch (error) {
 		console.error(`Data Deletion Failed: ${error}`.brightRed.inverse);
