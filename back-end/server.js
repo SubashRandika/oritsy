@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from '../back-end/config/database.js';
 import productRoutes from './routes/product.js';
+import { routeNotFount, errorHandler } from './middlewares/errors.js';
 
 colors.setTheme({
 	info: ['brightYellow', 'bold'],
@@ -24,6 +25,10 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/products', productRoutes);
+
+app.use(routeNotFount);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
