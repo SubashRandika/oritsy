@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from '../back-end/config/database.js';
-import products from '../back-end/data/products.js';
+import productRoutes from './routes/product.js';
 
 colors.setTheme({
 	info: ['brightYellow', 'bold'],
@@ -23,14 +23,7 @@ app.get('/health', (req, res) => {
 	});
 });
 
-app.get('/api/products', (req, res) => {
-	return res.status(200).json(products);
-});
-
-app.get('/api/products/:id', (req, res) => {
-	const product = products.find((product) => product._id === req.params.id);
-	return res.status(200).json(product);
-});
+app.use('/api/products', productRoutes);
 
 const PORT = process.env.PORT || 5000;
 
