@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/ProductCard';
+import { fetchProducts } from '../redux/actions/productActions';
+import { productsSelector } from '../redux/slices/productsSlice';
 
 const Home = () => {
-	const [products, setProducts] = useState([]);
+	const dispatch = useDispatch();
+	const { products } = useSelector(productsSelector).productsList;
 
 	useEffect(() => {
-		const getAllProducts = async () => {
-			const { data } = await axios.get('/api/products');
-			setProducts(data);
-		};
-
-		getAllProducts();
-	}, []);
+		dispatch(fetchProducts());
+	}, [dispatch]);
 
 	return (
 		<main className='container m-auto py-4'>
