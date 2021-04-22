@@ -28,6 +28,6 @@ const productsSlice = createSlice({
 	}
 });
 
-export const productsSelector = (state) => state;
+export const productsSelector = (state) => state.productsList;
 
 export default productsSlice.reducer;

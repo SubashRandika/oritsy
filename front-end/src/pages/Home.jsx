@@ -6,7 +6,8 @@ import { productsSelector } from '../redux/slices/productsSlice';
 
 const Home = () => {
 	const dispatch = useDispatch();
-	const { products } = useSelector(productsSelector).productsList;
+	const productsList = useSelector(productsSelector);
+	const { products, loading, error } = productsList;
 
 	useEffect(() => {
 		dispatch(fetchProducts());
