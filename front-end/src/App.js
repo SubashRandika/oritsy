@@ -8,16 +8,18 @@ import ProductDetails from './pages/ProductDetails';
 const App = () => {
 	return (
 		<Router>
-			<Header />
-			<Switch>
-				<Route exact path='/'>
-					<Home />
-				</Route>
-				<Route path='/product/:id'>
-					<ProductDetails />
-				</Route>
-			</Switch>
-			<Footer />
+			<div className='flex flex-col h-screen'>
+				<Header />
+				<Switch>
+					<Route exact path='/'>
+						<Home />
+					</Route>
+					<Route path='/product/:id'>
+						<ProductDetails />
+					</Route>
+				</Switch>
+				<Footer />
+			</div>
 		</Router>
 	);
 };
