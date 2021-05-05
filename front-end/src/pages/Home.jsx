@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader/Loader';
 import { fetchProducts } from '../redux/actions/productActions';
 import { productsSelector } from '../redux/slices/productsSlice';
-import Alert from '../components/Alert/Alert';
+import Alert from '../components/Alert';
 
 const Home = () => {
 	const dispatch = useDispatch();
