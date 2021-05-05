@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
@@ -14,12 +14,18 @@ import Alert from '../components/Alert';
 const ProductDetails = () => {
 	const dispatch = useDispatch();
 	const productDetails = useSelector(productDetailsSelector);
+	const [quantity, setQuantity] = useState(0);
 	const { product, loading, error } = productDetails;
 	const { id } = useParams();
+	const history = useHistory();
 
 	useEffect(() => {
 		dispatch(fetchProductDetails(id));
 	}, [dispatch, id]);
+
+	const handleAddToCart = () => {
+		history.push(`/cart/${id}?qty=${quantity}`);
+	};
 
 	return (
 		<React.Fragment>
@@ -107,6 +113,8 @@ const ProductDetails = () => {
 												? 'hover:text-gray-600 cursor-not-allowed'
 												: 'hover:border-yellow-500 cursor-pointer'
 										}`}
+										value={quantity}
+										onChange={(e) => setQuantity(e.target.value)}
 									>
 										{product?.countInStock > 0 ? (
 											Array.from(
@@ -125,7 +133,10 @@ const ProductDetails = () => {
 							</div>
 							<hr className='w-2/3 my-3 bg-gradient-to-r from-white via-gray-300 to-white h-0.5 border-0' />
 							<div className='flex justify-end w-2/3 my-3'>
-								<button className='flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'>
+								<button
+									className='flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+									onClick={handleAddToCart}
+								>
 									<span className='uppercase mr-2'>Add to cart</span>
 									<span className='text-2xl'>
 										<GiShoppingCart />
