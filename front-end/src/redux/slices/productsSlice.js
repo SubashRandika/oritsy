@@ -21,9 +21,9 @@ const productsSlice = createSlice({
 			state.loading = false;
 			state.error = null;
 		},
-		[fetchProducts.rejected]: (state, { message }) => {
+		[fetchProducts.rejected]: (state, { payload }) => {
 			state.loading = false;
-			state.error = message;
+			state.error = payload.message;
 		}
 	}
 });

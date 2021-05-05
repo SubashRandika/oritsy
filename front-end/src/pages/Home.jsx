@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { AiFillCloseCircle } from 'react-icons/ai';
 import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader/Loader';
 import { fetchProducts } from '../redux/actions/productActions';
 import { productsSelector } from '../redux/slices/productsSlice';
+import Alert from '../components/Alert/Alert';
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -23,10 +25,17 @@ const Home = () => {
 					<div className='text-lg text-gray-500 font-semibold'>Loading...</div>
 				</div>
 			) : error ? (
-				<h1>Error Here</h1>
+				<div className='flex mt-6'>
+					<Alert
+						type='error'
+						header='Error Occurred'
+						body='Something went wrong'
+						icon={<AiFillCloseCircle />}
+					/>
+				</div>
 			) : (
 				<div className='grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6'>
-					{products.map((product) => (
+					{products?.map((product) => (
 						<ProductCard key={product._id} product={product} />
 					))}
 				</div>
