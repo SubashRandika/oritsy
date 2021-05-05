@@ -12,3 +12,15 @@ export const fetchProducts = createAsyncThunk(
 		}
 	}
 );
+
+export const fetchProductDetails = createAsyncThunk(
+	'products/fetchProductDetails',
+	async (productId, { rejectWithValue }) => {
+		try {
+			const { data } = await axios.get(`/api/products/${productId}`);
+			return data;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);

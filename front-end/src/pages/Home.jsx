@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import ProductCard from '../components/ProductCard';
-import Loader from '../components/Loader/Loader';
 import { fetchProducts } from '../redux/actions/productActions';
 import { productsSelector } from '../redux/slices/productsSlice';
+import ProductCard from '../components/ProductCard';
+import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
 
 const Home = () => {
