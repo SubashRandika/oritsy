@@ -92,13 +92,16 @@ const ProductDetails = () => {
 								>
 									{product?.countInStock > 0 ? 'In Stock.' : 'Out Of Stock.'}
 								</h2>
-								<div className='relative inline-flex'>
+								<div
+									className={`relative ${
+										product?.countInStock === 0 ? 'hidden' : 'inline-flex'
+									}`}
+								>
 									<span className='w-2 h-4 absolute top-0 right-0 my-3 mr-5 pointer-events-none'>
 										<FiChevronDown />
 									</span>
 									<span className='absolute top-0 left-0 my-2 ml-4'>Qty:</span>
 									<select
-										disabled={product?.countInStock === 0}
 										className={`border border-gray-300 rounded-full text-gray-600 h-10 pl-14 pr-8 bg-white focus:outline-none appearance-none ${
 											product?.countInStock === 0
 												? 'hover:text-gray-600 cursor-not-allowed'
