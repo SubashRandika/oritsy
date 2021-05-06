@@ -108,7 +108,7 @@ const ProductDetails = () => {
 									</span>
 									<span className='absolute top-0 left-0 my-2 ml-4'>Qty:</span>
 									<select
-										className={`border border-gray-300 rounded-full text-gray-600 h-10 pl-14 pr-8 bg-white focus:outline-none appearance-none ${
+										className={`border border-gray-300 rounded-full text-gray-600 h-10 pl-14 pr-8 bg-white focus:outline-none appearance-none transition duration-500 ease-in-out ${
 											product?.countInStock === 0
 												? 'hover:text-gray-600 cursor-not-allowed'
 												: 'hover:border-yellow-500 cursor-pointer'
