@@ -14,7 +14,7 @@ import Alert from '../components/Alert';
 const ProductDetails = () => {
 	const dispatch = useDispatch();
 	const productDetails = useSelector(productDetailsSelector);
-	const [quantity, setQuantity] = useState(0);
+	const [quantity, setQuantity] = useState(1);
 	const { product, loading, error } = productDetails;
 	const { id } = useParams();
 	const history = useHistory();
