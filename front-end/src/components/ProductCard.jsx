@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
 					src={product.image}
 					alt='Product'
 				/>
-				<button className='relative p-2 rounded-full bg-yellow-500 text-white mx-3 hover:bg-red-400 focus:outline-none mb-2'>
+				<button className='relative p-2 rounded-full bg-yellow-500 text-white mx-3 hover:bg-red-400 focus:outline-none mb-2 transition duration-500 ease-in-out'>
 					<span className='text-3xl'>
 						<GiShoppingCart />
 					</span>

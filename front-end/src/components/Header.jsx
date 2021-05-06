@@ -27,7 +27,10 @@ const Header = () => {
 							<FiLogIn />
 						</span>
 					</Link>
-					<Link className='text-5xl text-gray-500' to='/cart'>
+					<Link
+						className='text-4xl text-gray-500 rounded-full p-2 hover:bg-gray-50 transition duration-500 ease-in-out'
+						to='/cart'
+					>
 						<GiShoppingCart />
 					</Link>
 				</div>
