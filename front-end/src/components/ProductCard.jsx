@@ -1,10 +1,46 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { GiShoppingCart } from 'react-icons/gi';
 import Rating from './Rating';
+import { addToCart } from '../redux/actions/cartActions';
+import { cartSelector } from '../redux/slices/cartSlice';
 
 const ProductCard = ({ product }) => {
+	const dispatch = useDispatch();
+	const { cartItems } = useSelector(cartSelector);
+
+	const checkCartItemOutOfStock = () => {
+		if (product.countInStock === 0) {
+			return true;
+		} else {
+			const itemToCheck = cartItems.find(
+				(item) => item.product === product._id
+			);
+
+			if (!itemToCheck) {
+				return false;
+			}
+
+			if (itemToCheck.countInStock - itemToCheck.quantity === 0) {
+				return true;
+			}
+
+			return false;
+		}
+	};
+
+	const handleAddToCart = (e) => {
+		e.preventDefault();
+
+		if (checkCartItemOutOfStock()) {
+			return;
+		} else {
+			dispatch(addToCart({ id: product._id, quantity: 1 }));
+		}
+	};
+
 	return (
 		<Link
 			className='group shadow-sm overflow-hidden border border-gray-200 transition-shadow duration-500 transform hover:shadow-md'
@@ -16,7 +52,10 @@ const ProductCard = ({ product }) => {
 					src={product.image}
 					alt='Product'
 				/>
-				<button className='relative p-2 rounded-full bg-yellow-500 text-white mx-3 hover:bg-red-400 focus:outline-none mb-2 transition duration-500 ease-in-out'>
+				<button
+					className='relative p-2 rounded-full bg-yellow-500 text-white mx-3 hover:bg-red-400 focus:outline-none mb-2 transition duration-500 ease-in-out'
+					onClick={handleAddToCart}
+				>
 					<span className='text-3xl'>
 						<GiShoppingCart />
 					</span>

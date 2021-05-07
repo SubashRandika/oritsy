@@ -1,10 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FaOpencart } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
+import { cartSelector } from '../redux/slices/cartSlice';
 
 const Header = () => {
+	const { cartItems } = useSelector(cartSelector);
+
+	const getCartItemsCount = () => {
+		const totalCartItems = cartItems.reduce(
+			(currentQuantity, currentItem) => currentQuantity + currentItem.quantity,
+			0
+		);
+
+		return totalCartItems > 99 ? '99+' : totalCartItems;
+	};
+
 	return (
 		<header className='container mx-auto h-auto'>
 			<div className='flex items-center h-20'>
@@ -27,11 +40,17 @@ const Header = () => {
 							<FiLogIn />
 						</span>
 					</Link>
-					<Link
-						className='text-4xl text-gray-500 rounded-full p-2 hover:bg-gray-50 transition duration-500 ease-in-out'
-						to='/cart'
-					>
-						<GiShoppingCart />
+					<Link className='text-4xl text-gray-500' to='/cart'>
+						<span className='relative inline-block rounded-full p-2 hover:bg-gray-50 transition duration-500 ease-in-out'>
+							<GiShoppingCart />
+							<span
+								className={`absolute top-3 right-1 items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-400 rounded-full transition duration-500 ease-in-out ${
+									getCartItemsCount() === 0 ? 'hidden' : 'inline-flex'
+								}`}
+							>
+								{getCartItemsCount()}
+							</span>
+						</span>
 					</Link>
 				</div>
 			</div>
