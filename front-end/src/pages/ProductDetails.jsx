@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
@@ -22,6 +22,7 @@ const tostOptions = {
 
 const ProductDetails = () => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const productDetails = useSelector(productDetailsSelector);
 	const { cartItems } = useSelector(cartSelector);
 	const [quantity, setQuantity] = useState(1);
@@ -55,6 +56,7 @@ const ProductDetails = () => {
 			return;
 		} else {
 			dispatch(addToCart({ id, quantity }));
+			history.push('/cart');
 		}
 	};
 

@@ -22,7 +22,7 @@ const App = () => {
 					<Route path='/product/:id'>
 						<ProductDetails />
 					</Route>
-					<Route path='/cart'>
+					<Route path='/cart/:id?'>
 						<Cart />
 					</Route>
 				</Switch>
