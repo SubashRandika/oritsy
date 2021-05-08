@@ -40,7 +40,6 @@ const ProductDetails = () => {
 	};
 
 	const handleAddToCart = () => {
-		console.log('Add To Cart');
 		if (checkCountInStockExceeded()) {
 			return;
 		} else {
