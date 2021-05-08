@@ -3,9 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { GiShoppingCart } from 'react-icons/gi';
+import { toast } from 'react-toastify';
 import Rating from './Rating';
 import { addToCart } from '../redux/actions/cartActions';
 import { cartSelector } from '../redux/slices/cartSlice';
+
+const tostOptions = {
+	position: 'top-center',
+	autoClose: '10000',
+	type: 'info'
+};
 
 const ProductCard = ({ product }) => {
 	const dispatch = useDispatch();
@@ -35,6 +42,12 @@ const ProductCard = ({ product }) => {
 		e.preventDefault();
 
 		if (checkCartItemOutOfStock()) {
+			toast(
+				product.countInStock === 0
+					? `Product ${product.name} is out of stock`
+					: `You have added this product into cart to the maximum. We have only ${product.countInStock} in stock.`,
+				tostOptions
+			);
 			return;
 		} else {
 			dispatch(addToCart({ id: product._id, quantity: 1 }));

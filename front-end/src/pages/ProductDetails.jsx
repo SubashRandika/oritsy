@@ -5,6 +5,7 @@ import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
 import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 import { fetchProductDetails } from '../redux/actions/productActions';
 import { productDetailsSelector } from '../redux/slices/productDetailsSlice';
 import { addToCart } from '../redux/actions/cartActions';
@@ -12,6 +13,12 @@ import { cartSelector } from '../redux/slices/cartSlice';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
+
+const tostOptions = {
+	position: 'top-center',
+	autoClose: '10000',
+	type: 'info'
+};
 
 const ProductDetails = () => {
 	const dispatch = useDispatch();
@@ -41,6 +48,10 @@ const ProductDetails = () => {
 
 	const handleAddToCart = () => {
 		if (checkCountInStockExceeded()) {
+			toast(
+				`You have added this product into cart to the maximum. We have only ${product.countInStock} in stock.`,
+				tostOptions
+			);
 			return;
 		} else {
 			dispatch(addToCart({ id, quantity }));
