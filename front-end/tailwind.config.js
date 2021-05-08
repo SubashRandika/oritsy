@@ -14,7 +14,8 @@ module.exports = {
 	},
 	variants: {
 		extend: {
-			scale: ['group-hover']
+			scale: ['group-hover'],
+			opacity: ['disabled']
 		}
 	},
 	plugins: []

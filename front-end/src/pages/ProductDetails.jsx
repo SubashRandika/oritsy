@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
@@ -7,6 +7,8 @@ import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { fetchProductDetails } from '../redux/actions/productActions';
 import { productDetailsSelector } from '../redux/slices/productDetailsSlice';
+import { addToCart } from '../redux/actions/cartActions';
+import { cartSelector } from '../redux/slices/cartSlice';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
@@ -14,17 +16,36 @@ import Alert from '../components/Alert';
 const ProductDetails = () => {
 	const dispatch = useDispatch();
 	const productDetails = useSelector(productDetailsSelector);
+	const { cartItems } = useSelector(cartSelector);
 	const [quantity, setQuantity] = useState(1);
 	const { product, loading, error } = productDetails;
 	const { id } = useParams();
-	const history = useHistory();
 
 	useEffect(() => {
 		dispatch(fetchProductDetails(id));
 	}, [dispatch, id]);
 
+	const checkCountInStockExceeded = () => {
+		const itemInCart = cartItems.find((item) => item.product === id);
+
+		if (!itemInCart) {
+			return false;
+		}
+
+		if (itemInCart.countInStock - itemInCart.quantity >= quantity) {
+			return false;
+		} else {
+			return true;
+		}
+	};
+
 	const handleAddToCart = () => {
-		history.push(`/cart/${id}?qty=${quantity}`);
+		console.log('Add To Cart');
+		if (checkCountInStockExceeded()) {
+			return;
+		} else {
+			dispatch(addToCart({ id, quantity }));
+		}
 	};
 
 	return (
@@ -134,7 +155,12 @@ const ProductDetails = () => {
 							<hr className='w-2/3 my-3 bg-gradient-to-r from-white via-gray-300 to-white h-0.5 border-0' />
 							<div className='flex justify-end w-2/3 my-3'>
 								<button
-									className='flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+									disabled={product.countInStock === 0}
+									className={`flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-6 py-2 mr-5 shadow-md ${
+										product.countInStock === 0
+											? 'shadow-none cursor-not-allowed'
+											: 'hover:shadow-lg'
+									} transition duration-300 ease-in-out disabled:opacity-50`}
 									onClick={handleAddToCart}
 								>
 									<span className='uppercase mr-2'>Add to cart</span>
