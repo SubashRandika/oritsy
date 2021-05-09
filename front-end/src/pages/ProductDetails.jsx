@@ -5,26 +5,17 @@ import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
 import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { toast } from 'react-toastify';
 import { fetchProductDetails } from '../redux/actions/productActions';
 import { productDetailsSelector } from '../redux/slices/productDetailsSlice';
 import { addToCart } from '../redux/actions/cartActions';
-import { cartSelector } from '../redux/slices/cartSlice';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
-
-const tostOptions = {
-	position: 'top-center',
-	autoClose: '10000',
-	type: 'info'
-};
 
 const ProductDetails = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const productDetails = useSelector(productDetailsSelector);
-	const { cartItems } = useSelector(cartSelector);
 	const [quantity, setQuantity] = useState(1);
 	const { product, loading, error } = productDetails;
 	const { id } = useParams();
@@ -33,31 +24,9 @@ const ProductDetails = () => {
 		dispatch(fetchProductDetails(id));
 	}, [dispatch, id]);
 
-	const checkCountInStockExceeded = () => {
-		const itemInCart = cartItems.find((item) => item.product === id);
-
-		if (!itemInCart) {
-			return false;
-		}
-
-		if (itemInCart.countInStock - itemInCart.quantity >= quantity) {
-			return false;
-		} else {
-			return true;
-		}
-	};
-
 	const handleAddToCart = () => {
-		if (checkCountInStockExceeded()) {
-			toast(
-				`You have added this product into cart to the maximum. We have only ${product.countInStock} in stock.`,
-				tostOptions
-			);
-			return;
-		} else {
-			dispatch(addToCart({ id, quantity }));
-			history.push('/cart');
-		}
+		dispatch(addToCart({ id, quantity }));
+		history.push('/cart');
 	};
 
 	return (

@@ -19,37 +19,22 @@ const ProductCard = ({ product }) => {
 	const { cartItems } = useSelector(cartSelector);
 
 	const checkCartItemOutOfStock = () => {
-		if (product.countInStock === 0) {
-			return true;
-		} else {
-			const itemToCheck = cartItems.find(
-				(item) => item.product === product._id
-			);
-
-			if (!itemToCheck) {
-				return false;
-			}
-
-			if (itemToCheck.countInStock - itemToCheck.quantity === 0) {
-				return true;
-			}
-
-			return false;
-		}
+		return product.countInStock === 0;
 	};
 
 	const handleAddToCart = (e) => {
 		e.preventDefault();
 
 		if (checkCartItemOutOfStock()) {
-			toast(
-				product.countInStock === 0
-					? `Product ${product.name} is out of stock`
-					: `You have added this product into cart to the maximum. We have only ${product.countInStock} in stock.`,
-				tostOptions
-			);
+			toast(`Product ${product.name} is out of stock`, tostOptions);
 			return;
 		} else {
+			const itemInCart = cartItems.find((item) => item.product === product._id);
+
+			if (itemInCart) {
+				return;
+			}
+
 			dispatch(addToCart({ id: product._id, quantity: 1 }));
 		}
 	};

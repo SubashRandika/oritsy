@@ -21,7 +21,7 @@ const cartSlice = createSlice({
 					if (item.product === existItem.product) {
 						return {
 							...existItem,
-							quantity: Number(existItem.quantity) + Number(itemToAdd.quantity)
+							quantity: Number(itemToAdd.quantity)
 						};
 					}
 
