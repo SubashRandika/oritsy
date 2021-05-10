@@ -8,6 +8,16 @@ const initialState = {
 const cartSlice = createSlice({
 	name: 'cartItems',
 	initialState,
+	reducers: {
+		removeFromCart: (state, actions) => {
+			const updateCartItems = current(state).cartItems.filter(
+				(item) => item.product !== actions.payload
+			);
+
+			state.cartItems = updateCartItems;
+			localStorage.setItem('cartItems', JSON.stringify(updateCartItems));
+		}
+	},
 	extraReducers: {
 		[addToCart.fulfilled]: (state, { payload }) => {
 			const itemToAdd = payload;
@@ -37,5 +47,7 @@ const cartSlice = createSlice({
 });
 
 export const cartSelector = (state) => state.cart;
+
+export const { removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

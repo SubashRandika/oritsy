@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { IoTrashBinOutline } from 'react-icons/io5';
 import { FiChevronDown } from 'react-icons/fi';
 import { addToCart } from '../redux/actions/cartActions';
+import { removeFromCart } from '../redux/slices/cartSlice';
 
 const CartItem = ({ cartItem }) => {
 	const dispatch = useDispatch();
@@ -13,10 +14,14 @@ const CartItem = ({ cartItem }) => {
 		dispatch(addToCart({ id: cartItem.product, quantity }));
 	};
 
+	const handleRemoveFromCart = () => {
+		dispatch(removeFromCart(cartItem.product));
+	};
+
 	return (
 		<div className='w-full max-h-24 flex items-center border-b border-gray-200 mb-4'>
 			<img
-				className='w-40 max-h-24 pb-2 object-contain flex-none'
+				className='w-36 max-h-24 pb-2 object-contain flex-none'
 				src={cartItem.image}
 				alt={cartItem.name}
 			/>
@@ -25,7 +30,7 @@ const CartItem = ({ cartItem }) => {
 					{cartItem.name}
 				</h2>
 			</Link>
-			<div className='w-32 ml-10 flex-none'>
+			<div className='w-36 ml-10 flex-none'>
 				<div className='relative inline-flex'>
 					<span className='w-2 h-4 absolute top-0 right-0 my-3 mr-5 pointer-events-none'>
 						<FiChevronDown />
@@ -55,12 +60,15 @@ const CartItem = ({ cartItem }) => {
 					</select>
 				</div>
 			</div>
-			<div className='w-32 ml-10 flex-none'>
+			<div className='w-28 ml-10 flex-none'>
 				<h2 className='text-lg font-semibold'>{`$ ${cartItem.price}`}</h2>
 			</div>
-			<div className='w-32 flex-none'>
-				<button className='flex items-center bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'>
-					<span className='mr-3'>Delete</span>
+			<div className='w-36 flex-none'>
+				<button
+					className='flex items-center bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+					onClick={handleRemoveFromCart}
+				>
+					<span className='mr-3 uppercase'>Delete</span>
 					<span className='text-xl'>
 						<IoTrashBinOutline />
 					</span>
