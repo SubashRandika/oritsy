@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from '../back-end/config/database.js';
 import productRoutes from './routes/product.js';
+import userRoutes from './routes/user.js';
 import { routeNotFount, errorHandler } from './middlewares/errors.js';
 
 colors.setTheme({
@@ -17,6 +18,8 @@ connectDB();
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/health', (req, res) => {
 	return res.status(200).json({
 		status: 'OK',
@@ -25,6 +28,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(routeNotFount);
 
