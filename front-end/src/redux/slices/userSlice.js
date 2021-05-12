@@ -13,6 +13,7 @@ const userSlice = createSlice({
 		[login.fulfilled]: (state, { payload }) => {
 			state.userInfo = payload;
 			state.loading = false;
+			state.error = null;
 			localStorage.setItem('userInfo', JSON.stringify(payload));
 		},
 		[login.rejected]: (state, { payload }) => {

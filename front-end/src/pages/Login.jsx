@@ -1,10 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../redux/actions/userActions';
+import { userSelector } from '../redux/slices/userSlice';
 
 const Login = () => {
-	const handleSignIn = () => {
-		console.log('Sign In');
+	const [signIn, setSignIn] = useState({
+		email: '',
+		password: ''
+	});
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const { loading, error, userInfo } = useSelector(userSelector);
+
+	const handleSignIn = (e) => {
+		e.preventDefault();
+		dispatch(login({ email: signIn.email, password: signIn.password }));
 	};
+
+	const handleOnChange = (e) => {
+		setSignIn({
+			...signIn,
+			[e.target.name]: e.target.value
+		});
+	};
+
+	useEffect(() => {
+		if (userInfo) {
+			history.push('/');
+		}
+	}, [history, userInfo]);
 
 	return (
 		<div className='container m-auto h-full'>
@@ -18,8 +43,12 @@ const Login = () => {
 							</span>
 						</div>
 					</div>
-					<p className='text-red-500 text-sm italic mt-6'>
-						Please provide your email and password correctly.
+					<p
+						className={`text-red-500 text-md font-semibold italic mt-6 ${
+							!error ? 'hidden' : ''
+						}`}
+					>
+						{error}
 					</p>
 				</div>
 				<div className='my-6'>
@@ -32,10 +61,12 @@ const Login = () => {
 								Email
 							</label>
 							<input
+								className='w-full px-3 py-2 border border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500'
 								type='email'
 								name='email'
+								value={signIn.email}
 								placeholder='name@company.com'
-								className='w-full px-3 py-2 border border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500'
+								onChange={handleOnChange}
 							/>
 						</div>
 						<div className='flex flex-col mb-6'>
@@ -49,7 +80,9 @@ const Login = () => {
 								className='w-full px-3 py-2 border border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500'
 								type='password'
 								name='password'
+								value={signIn.password}
 								placeholder='Your password'
+								onChange={handleOnChange}
 							/>
 						</div>
 						<div className='mb-6'>
@@ -57,7 +90,33 @@ const Login = () => {
 								className='w-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white text-lg font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
 								type='submit'
 							>
-								Sign in
+								{loading ? (
+									<div className='flex justify-center items-center'>
+										<svg
+											className='animate-spin h-5 w-5 text-white mr-3'
+											xmlns='http://www.w3.org/2000/svg'
+											fill='none'
+											viewBox='0 0 24 24'
+										>
+											<circle
+												className='opacity-25'
+												cx='12'
+												cy='12'
+												r='10'
+												stroke='currentColor'
+												strokeWidth='4'
+											></circle>
+											<path
+												className='opacity-75'
+												fill='currentColor'
+												d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+											></path>
+										</svg>
+										<p>Signing in</p>
+									</div>
+								) : (
+									<p>Sign in</p>
+								)}
 							</button>
 						</div>
 						<p className='text-sm text-center text-gray-400'>
