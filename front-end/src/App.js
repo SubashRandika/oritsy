@@ -9,6 +9,7 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 
 import 'react-toastify/dist/ReactToastify.css';
+import Register from './pages/Register';
 
 const App = () => {
 	return (
@@ -19,6 +20,9 @@ const App = () => {
 				<Switch>
 					<Route exact path='/signin'>
 						<Login />
+					</Route>
+					<Route exact path='/register'>
+						<Register />
 					</Route>
 					<Route path='/product/:id'>
 						<ProductDetails />
