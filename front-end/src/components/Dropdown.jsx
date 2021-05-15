@@ -47,7 +47,7 @@ const Dropdown = ({ name, email, logout }) => {
 				aria-labelledby='menu-button'
 				tabIndex='-1'
 			>
-				<div className='absolute right-2 w-56 mt-3.5 origin-top-right bg-white border border-gray-200 divide-y divide-gray-200 shadow-lg outline-none'>
+				<div className='absolute right-2 w-60 mt-3.5 origin-top-right bg-white border border-gray-200 divide-y divide-gray-200 shadow-lg outline-none'>
 					<div className='px-4 py-3'>
 						<p className='text-md'>Signed in as :</p>
 						<p className='text-md text-blue-400 pt-1'>{email}</p>

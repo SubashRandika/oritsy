@@ -5,13 +5,13 @@ import { FaOpencart } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
 import { cartSelector } from '../redux/slices/cartSlice';
-import { userSelector, logout } from '../redux/slices/userSlice';
+import { userLoginSelector, logout } from '../redux/slices/userLoginSlice';
 import Dropdown from './Dropdown';
 
 const Header = () => {
 	const dispatch = useDispatch();
 	const { cartItems } = useSelector(cartSelector);
-	const { userInfo } = useSelector(userSelector);
+	const { userInfo } = useSelector(userLoginSelector);
 	const history = useHistory();
 
 	const getCartItemsCount = () => {

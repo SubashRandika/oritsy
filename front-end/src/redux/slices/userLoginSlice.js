@@ -3,8 +3,8 @@ import { login } from '../actions/userActions';
 
 const initialState = {};
 
-const userSlice = createSlice({
-	name: 'user',
+const userLoginSlice = createSlice({
+	name: 'userLogin',
 	initialState,
 	reducers: {
 		logout: (state, actions) => {
@@ -29,8 +29,8 @@ const userSlice = createSlice({
 	}
 });
 
-export const userSelector = (state) => state.userLogin;
+export const userLoginSelector = (state) => state.userLogin;
 
-export const { logout } = userSlice.actions;
+export const { logout } = userLoginSlice.actions;
 
-export default userSlice.reducer;
+export default userLoginSlice.reducer;

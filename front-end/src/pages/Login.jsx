@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/userActions';
-import { userSelector } from '../redux/slices/userSlice';
+import { userLoginSelector } from '../redux/slices/userLoginSlice';
 
 const Login = () => {
 	const [signIn, setSignIn] = useState({
@@ -11,7 +11,7 @@ const Login = () => {
 	});
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { loading, error, userInfo } = useSelector(userSelector);
+	const { loading, error, userInfo } = useSelector(userLoginSelector);
 
 	const handleSignIn = (e) => {
 		e.preventDefault();

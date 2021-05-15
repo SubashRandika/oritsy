@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import productsSlice from './slices/productsSlice';
 import productDetailsSlice from './slices/productDetailsSlice';
 import cartSlice from './slices/cartSlice';
-import userSlice from './slices/userSlice';
+import userLoginSlice from './slices/userLoginSlice';
 import userRegisterSlice from './slices/userRegisterSlice';
 
 const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
@@ -18,7 +18,7 @@ export default configureStore({
 		productsList: productsSlice,
 		productDetails: productDetailsSlice,
 		cart: cartSlice,
-		userLogin: userSlice,
+		userLogin: userLoginSlice,
 		userRegister: userRegisterSlice
 	},
 	preloadedState: {
