@@ -35,7 +35,7 @@ const Login = () => {
 		<div className='container m-auto h-full'>
 			<div className='max-w-sm mx-auto mt-28 mb-10'>
 				<div className='text-center'>
-					<h1 className='my-3 text-4xl font-bold text-gray-700'>Sign in</h1>
+					<h1 className='my-3 text-4xl font-bold text-gray-700'>Sign In</h1>
 					<div className='relative mt-6 h-px bg-gray-300'>
 						<div className='absolute left-0 top-0 flex justify-center w-full -mt-2'>
 							<span className='bg-white px-4 text-xs text-gray-500 uppercase'>
@@ -112,10 +112,10 @@ const Login = () => {
 												d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
 											></path>
 										</svg>
-										<p>Signing in</p>
+										<p>Signing In</p>
 									</div>
 								) : (
-									<p>Sign in</p>
+									<p>Sign In</p>
 								)}
 							</button>
 						</div>
