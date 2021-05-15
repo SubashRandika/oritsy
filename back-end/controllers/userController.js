@@ -91,4 +91,36 @@ const getUserProfile = async (req, res) => {
 	});
 };
 
-export { userLogin, registerUser, getUserProfile };
+/**
+ * @desc    Update user profile details
+ * @route   PUT /api/users/profile
+ * @access  Private
+ */
+const updateUserProfile = async (req, res) => {
+	const user = await User.findById(req.user._id);
+
+	if (!user) {
+		res.status(404);
+		throw new Error('User cannot be found');
+	}
+
+	user.name = req.body.name || user.name;
+	user.email = req.body.email || user.email;
+
+	if (req.body.password) {
+		user.password = req.body.password;
+	}
+
+	const updatedUser = await user.save();
+	const { _id, name, email, isAdmin } = updatedUser;
+
+	res.status(200).json({
+		_id,
+		name,
+		email,
+		isAdmin,
+		token: generateToken(_id)
+	});
+};
+
+export { userLogin, registerUser, getUserProfile, updateUserProfile };
