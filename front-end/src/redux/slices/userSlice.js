@@ -6,6 +6,12 @@ const initialState = {};
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
+	reducers: {
+		logout: (state, actions) => {
+			localStorage.removeItem('userInfo');
+			state.userInfo = null;
+		}
+	},
 	extraReducers: {
 		[login.pending]: (state) => {
 			state.loading = true;
@@ -24,5 +30,7 @@ const userSlice = createSlice({
 });
 
 export const userSelector = (state) => state.userLogin;
+
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;
