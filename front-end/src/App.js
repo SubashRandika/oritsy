@@ -10,6 +10,7 @@ import Login from './pages/Login';
 
 import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 const App = () => {
 	return (
@@ -23,6 +24,9 @@ const App = () => {
 					</Route>
 					<Route exact path='/register'>
 						<Register />
+					</Route>
+					<Route exact path='/profile'>
+						<Profile />
 					</Route>
 					<Route path='/product/:id'>
 						<ProductDetails />
