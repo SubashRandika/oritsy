@@ -1,9 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import productsSlice from './slices/productsSlice';
 import productDetailsSlice from './slices/productDetailsSlice';
 import cartSlice from './slices/cartSlice';
 import userLoginSlice from './slices/userLoginSlice';
 import userRegisterSlice from './slices/userRegisterSlice';
+import userProfileSlice from './slices/userProfileSlice';
 
 const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
@@ -19,7 +20,8 @@ export default configureStore({
 		productDetails: productDetailsSlice,
 		cart: cartSlice,
 		userLogin: userLoginSlice,
-		userRegister: userRegisterSlice
+		userRegister: userRegisterSlice,
+		userDetails: userProfileSlice
 	},
 	preloadedState: {
 		cart: {
@@ -28,5 +30,8 @@ export default configureStore({
 		userLogin: {
 			userInfo: userInfoFromLocalStorage
 		}
-	}
+	},
+	middleware: getDefaultMiddleware({
+		serializableCheck: false
+	})
 });

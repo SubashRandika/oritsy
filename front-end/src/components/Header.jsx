@@ -24,8 +24,7 @@ const Header = () => {
 	};
 
 	const logoutHandler = () => {
-		dispatch(logout());
-		history.push('/');
+		dispatch(logout(history));
 	};
 
 	return (

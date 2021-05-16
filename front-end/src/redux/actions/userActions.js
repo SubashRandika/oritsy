@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { logout } from '../slices/userLoginSlice';
 
 export const login = createAsyncThunk(
 	'users/login',
@@ -52,6 +53,35 @@ export const register = createAsyncThunk(
 			return data;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+export const getUserDetails = createAsyncThunk(
+	'users/profile',
+	async ({ id }, { rejectWithValue, getState, dispatch }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.get(`/api/users/${id}`, config);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			if (message === 'Not authorized, Token verification failed') {
+				dispatch(logout());
+			}
+
+			return rejectWithValue({ message });
 		}
 	}
 );

@@ -7,9 +7,10 @@ const userLoginSlice = createSlice({
 	name: 'userLogin',
 	initialState,
 	reducers: {
-		logout: (state, actions) => {
+		logout: (state, { payload }) => {
 			localStorage.removeItem('userInfo');
 			state.userInfo = null;
+			payload.push('/signin');
 		}
 	},
 	extraReducers: {
