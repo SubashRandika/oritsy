@@ -1,6 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { logout } from '../slices/userLoginSlice';
+
+const tostSuccessOptions = {
+	position: 'top-center',
+	autoClose: '10000',
+	type: 'success'
+};
+
+const tostErrorOptions = {
+	position: 'top-center',
+	autoClose: '10000',
+	type: 'error'
+};
 
 export const login = createAsyncThunk(
 	'users/login',
@@ -80,6 +93,43 @@ export const getUserDetails = createAsyncThunk(
 			if (message === 'Not authorized, Token verification failed') {
 				dispatch(logout());
 			}
+
+			return rejectWithValue({ message });
+		}
+	}
+);
+
+export const updateUserProfile = createAsyncThunk(
+	'users/profile/update',
+	async (user, { rejectWithValue, getState, dispatch }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.put(
+				'/api/users/profile',
+				{ ...user },
+				config
+			);
+
+			toast('Your profile has been successfully updated', tostSuccessOptions);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			if (message === 'Not authorized, Token verification failed') {
+				dispatch(logout());
+			}
+
+			toast(message, tostErrorOptions);
 
 			return rejectWithValue({ message });
 		}

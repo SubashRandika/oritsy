@@ -5,6 +5,7 @@ import cartSlice from './slices/cartSlice';
 import userLoginSlice from './slices/userLoginSlice';
 import userRegisterSlice from './slices/userRegisterSlice';
 import userProfileSlice from './slices/userProfileSlice';
+import userProfileUpdateSlice from './slices/userProfileUpdateSlice';
 
 const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
@@ -21,7 +22,8 @@ export default configureStore({
 		cart: cartSlice,
 		userLogin: userLoginSlice,
 		userRegister: userRegisterSlice,
-		userDetails: userProfileSlice
+		userDetails: userProfileSlice,
+		userProfileUpdate: userProfileUpdateSlice
 	},
 	preloadedState: {
 		cart: {
