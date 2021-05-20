@@ -34,7 +34,7 @@ const Profile = () => {
 
 	useEffect(() => {
 		if (!userInfo) {
-			history.push('/login');
+			history.push('/signin');
 		} else {
 			if (!user) {
 				dispatch(getUserDetails({ id: 'profile' }));
