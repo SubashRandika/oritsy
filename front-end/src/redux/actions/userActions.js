@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { logout } from '../slices/userLoginSlice';
 
 const tostSuccessOptions = {
 	position: 'top-center',
@@ -72,7 +71,7 @@ export const register = createAsyncThunk(
 
 export const getUserDetails = createAsyncThunk(
 	'users/profile',
-	async ({ id }, { rejectWithValue, getState, dispatch }) => {
+	async ({ id }, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
 		} = getState();
@@ -88,20 +87,14 @@ export const getUserDetails = createAsyncThunk(
 
 			return data;
 		} catch (error) {
-			const { message } = error.response.data;
-
-			if (message === 'Not authorized, Token verification failed') {
-				dispatch(logout());
-			}
-
-			return rejectWithValue({ message });
+			return rejectWithValue(error.response.data);
 		}
 	}
 );
 
 export const updateUserProfile = createAsyncThunk(
 	'users/profile/update',
-	async (user, { rejectWithValue, getState, dispatch }) => {
+	async (user, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
 		} = getState();
@@ -124,10 +117,6 @@ export const updateUserProfile = createAsyncThunk(
 			return data;
 		} catch (error) {
 			const { message } = error.response.data;
-
-			if (message === 'Not authorized, Token verification failed') {
-				dispatch(logout());
-			}
 
 			toast(message, tostErrorOptions);
 

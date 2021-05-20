@@ -6,7 +6,7 @@ import {
 	updateUserProfile
 } from '../redux/actions/userActions';
 import { userDetailsSelector } from '../redux/slices/userProfileSlice';
-import { userLoginSelector } from '../redux/slices/userLoginSlice';
+import { userLoginSelector, logout } from '../redux/slices/userLoginSlice';
 import { userProfileUpdateSelector } from '../redux/slices/userProfileUpdateSlice';
 import Loader from '../components/Loader/Loader';
 
@@ -33,6 +33,11 @@ const Profile = () => {
 	};
 
 	useEffect(() => {
+		if (error === 'Not authorized, Token verification failed') {
+			dispatch(logout(history));
+			return;
+		}
+
 		if (!userInfo) {
 			history.push('/signin');
 		} else {
@@ -45,7 +50,7 @@ const Profile = () => {
 				});
 			}
 		}
-	}, [dispatch, history, userInfo, user]);
+	}, [dispatch, history, userInfo, user, error]);
 
 	const handleUpdateProfile = (e) => {
 		e.preventDefault();
