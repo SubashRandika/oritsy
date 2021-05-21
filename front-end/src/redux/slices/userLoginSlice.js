@@ -10,7 +10,7 @@ const userLoginSlice = createSlice({
 		logout: (state, { payload }) => {
 			localStorage.removeItem('userInfo');
 			state.userInfo = null;
-			payload.push('/signin');
+			payload.push('/');
 		}
 	},
 	extraReducers: {

@@ -7,10 +7,11 @@ import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
-
-import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Checkout from './pages/Checkout';
+import PrivateRoute from './components/PrivateRoute';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 	return (
@@ -25,9 +26,12 @@ const App = () => {
 					<Route exact path='/register'>
 						<Register />
 					</Route>
-					<Route exact path='/profile'>
+					<PrivateRoute exact path='/profile'>
 						<Profile />
-					</Route>
+					</PrivateRoute>
+					<PrivateRoute exact path='/checkout'>
+						<Checkout />
+					</PrivateRoute>
 					<Route path='/product/:id'>
 						<ProductDetails />
 					</Route>

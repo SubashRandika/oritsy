@@ -1,12 +1,14 @@
 import React from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ImCreditCard } from 'react-icons/im';
 import { MdRemoveShoppingCart } from 'react-icons/md';
 import CartItem from '../components/CartItem';
 import { cartSelector } from '../redux/slices/cartSlice';
-import { Link } from 'react-router-dom';
 
 const Cart = () => {
+	const history = useHistory();
+	const { state } = useLocation();
 	const { cartItems } = useSelector(cartSelector);
 
 	const getTotalCartItems = () => {
@@ -30,6 +32,10 @@ const Cart = () => {
 				0
 			)
 			.toFixed(2);
+	};
+
+	const handleCheckoutProcess = () => {
+		history.push(state?.from || '/checkout');
 	};
 
 	return (
@@ -81,6 +87,7 @@ const Cart = () => {
 										? 'shadow-none cursor-not-allowed'
 										: 'hover:shadow-lg'
 								} transition duration-300 ease-in-out disabled:opacity-50`}
+								onClick={handleCheckoutProcess}
 							>
 								<span className='mr-3 uppercase'>Proceed to checkout</span>
 								<span className='text-xl'>

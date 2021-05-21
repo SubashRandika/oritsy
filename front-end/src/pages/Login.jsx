@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/userActions';
 import { userLoginSelector } from '../redux/slices/userLoginSlice';
@@ -11,6 +11,7 @@ const Login = () => {
 	});
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const { state } = useLocation();
 	const { loading, error, userInfo } = useSelector(userLoginSelector);
 
 	const handleSignIn = (e) => {
@@ -27,9 +28,9 @@ const Login = () => {
 
 	useEffect(() => {
 		if (userInfo) {
-			history.push('/');
+			history.push(state?.from || '/');
 		}
-	}, [history, userInfo]);
+	}, [history, state?.from, userInfo]);
 
 	return (
 		<div className='container m-auto h-full'>
