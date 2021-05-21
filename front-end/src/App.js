@@ -9,7 +9,7 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import Checkout from './pages/Checkout';
+import Shipping from './pages/Shipping';
 import PrivateRoute from './components/PrivateRoute';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -29,8 +29,8 @@ const App = () => {
 					<PrivateRoute exact path='/profile'>
 						<Profile />
 					</PrivateRoute>
-					<PrivateRoute exact path='/checkout'>
-						<Checkout />
+					<PrivateRoute exact path='/shipping'>
+						<Shipping />
 					</PrivateRoute>
 					<Route path='/product/:id'>
 						<ProductDetails />

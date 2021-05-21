@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Checkout = () => {
+const Shipping = () => {
 	return (
 		<div className='container m-auto h-full my-10'>
-			<h1>Checkout Page</h1>
+			<h1>Shipping Page</h1>
 		</div>
 	);
 };
 
-export default Checkout;
+export default Shipping;

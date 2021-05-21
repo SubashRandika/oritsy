@@ -35,7 +35,7 @@ const Cart = () => {
 	};
 
 	const handleCheckoutProcess = () => {
-		history.push(state?.from || '/checkout');
+		history.push(state?.from || '/shipping');
 	};
 
 	return (
