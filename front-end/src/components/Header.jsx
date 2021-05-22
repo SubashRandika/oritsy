@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import jwt_decode from 'jwt-decode';
 import { FaOpencart } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
@@ -26,6 +27,22 @@ const Header = () => {
 	const logoutHandler = () => {
 		dispatch(logout(history));
 	};
+
+	useEffect(() => {
+		const userInfo = localStorage.getItem('userInfo')
+			? JSON.parse(localStorage.getItem('userInfo'))
+			: null;
+
+		if (userInfo) {
+			console.log(userInfo.token);
+			const decoded = jwt_decode(userInfo.token);
+			const currentTime = Date.now() / 1000;
+
+			if (decoded.exp < currentTime) {
+				dispatch(logout(history));
+			}
+		}
+	}, [dispatch, history]);
 
 	return (
 		<header className='container mx-auto h-auto'>
