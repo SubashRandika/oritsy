@@ -34,7 +34,6 @@ const Header = () => {
 			: null;
 
 		if (userInfo) {
-			console.log(userInfo.token);
 			const decoded = jwt_decode(userInfo.token);
 			const currentTime = Date.now() / 1000;
 
