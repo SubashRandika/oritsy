@@ -1,4 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { HiChevronDown } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
@@ -72,6 +73,12 @@ const Dropdown = ({ name, email, logout }) => {
 			</div>
 		</div>
 	);
+};
+
+Dropdown.propTypes = {
+	name: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
+	logout: PropTypes.func.isRequired
 };
 
 export default Dropdown;

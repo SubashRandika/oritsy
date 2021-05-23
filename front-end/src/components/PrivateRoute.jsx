@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router';
 import { userLoginSelector } from '../redux/slices/userLoginSlice';
@@ -25,6 +26,14 @@ const PrivateRoute = ({ children, ...rest }) => {
 			}}
 		/>
 	);
+};
+
+PrivateRoute.propTypes = {
+	children: PropTypes.oneOfType([
+		PropTypes.arrayOf(PropTypes.node),
+		PropTypes.node
+	]).isRequired,
+	rest: PropTypes.object
 };
 
 export default PrivateRoute;

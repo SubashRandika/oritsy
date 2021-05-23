@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Alert = ({ type, header, body, icon }) => {
 	const alertStyles = {
@@ -22,6 +23,13 @@ const Alert = ({ type, header, body, icon }) => {
 			</div>
 		</div>
 	);
+};
+
+Alert.propType = {
+	type: PropTypes.string.isRequired,
+	header: PropTypes.string.isRequired,
+	body: PropTypes.string.isRequired,
+	icon: PropTypes.node.isRequired
 };
 
 export default Alert;
