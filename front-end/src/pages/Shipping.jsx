@@ -5,6 +5,7 @@ import {
 	cartSelector,
 	storeShippingAddressDetails
 } from '../redux/slices/cartSlice';
+import CheckoutStepper from '../components/CheckoutStepper/CheckoutStepper';
 
 const Shipping = () => {
 	const { shippingAddress } = useSelector(cartSelector);
@@ -32,8 +33,11 @@ const Shipping = () => {
 
 	return (
 		<main className='container m-auto h-full my-6'>
-			<div className='max-w-md mx-auto mt-24'>
-				<h1 className='text-2xl font-semibold mb-6'>Shipping</h1>
+			<div className='max-w-4xl mx-auto'>
+				<CheckoutStepper stepStatus={['outline', 'active']} />
+			</div>
+			<div className='max-w-md mx-auto mt-16'>
+				<h1 className='text-2xl font-semibold mb-6 text-center'>Shipping</h1>
 				<form onSubmit={handleShippingAddressSave}>
 					<div className='flex flex-col mb-6'>
 						<label
