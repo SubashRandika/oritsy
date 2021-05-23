@@ -3,7 +3,8 @@ import { addToCart } from '../actions/cartActions';
 
 const initialState = {
 	cartItems: [],
-	shippingAddress: {}
+	shippingAddress: {},
+	paymentMethod: ''
 };
 
 const cartSlice = createSlice({
@@ -21,6 +22,11 @@ const cartSlice = createSlice({
 		storeShippingAddressDetails: (state, actions) => {
 			state.shippingAddress = actions.payload;
 			localStorage.setItem('shippingAddress', JSON.stringify(actions.payload));
+		},
+		storePaymentMethod: (state, actions) => {
+			console.log(actions.payload);
+			state.paymentMethod = actions.payload;
+			localStorage.setItem('paymentMethod', JSON.stringify(actions.payload));
 		}
 	},
 	extraReducers: {
@@ -53,7 +59,10 @@ const cartSlice = createSlice({
 
 export const cartSelector = (state) => state.cart;
 
-export const { removeFromCart, storeShippingAddressDetails } =
-	cartSlice.actions;
+export const {
+	removeFromCart,
+	storeShippingAddressDetails,
+	storePaymentMethod
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

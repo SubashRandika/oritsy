@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import CheckoutStepper from '../components/CheckoutStepper/CheckoutStepper';
+import { cartSelector, storePaymentMethod } from '../redux/slices/cartSlice';
 
 const Payment = () => {
 	const history = useHistory();
-	const [paymentMethod, setPaymentMethod] = useState('PayPal');
+	const dispatch = useDispatch();
+	const { paymentMethod } = useSelector(cartSelector);
+	const [payMethod, setPayMethod] = useState(paymentMethod);
 
 	const handlePaymentMethodSave = (e) => {
 		e.preventDefault();
+		dispatch(storePaymentMethod(payMethod));
 		history.push('/place-order');
 	};
 
 	const handleOnChange = (e) => {
-		console.log('Changed');
-		setPaymentMethod(e.target.value);
+		setPayMethod(e.target.value);
 	};
 
 	return (
@@ -37,7 +41,7 @@ const Payment = () => {
 							name='paymentMethod'
 							value='PayPal'
 							onChange={handleOnChange}
-							checked
+							checked={payMethod === 'PayPal' ? true : false}
 						/>
 						<label
 							className='ml-2 cursor-pointer text-gray-700'
@@ -54,6 +58,7 @@ const Payment = () => {
 							name='paymentMethod'
 							value='Stripe'
 							onChange={handleOnChange}
+							checked={payMethod === 'Stripe' ? true : false}
 						/>
 						<label
 							className='ml-2 cursor-pointer text-gray-700'
@@ -62,6 +67,11 @@ const Payment = () => {
 							Stripe
 						</label>
 					</div>
+					<p className='text-sm text-gray-500'>
+						<span className='text-lg text-red-600 font-semibold'>*</span>{' '}
+						Currently we support only PayPal. Stripe support will be available
+						soon.
+					</p>
 					<div className='my-12 w-48'>
 						<button
 							className='w-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white text-lg font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
