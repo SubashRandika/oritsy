@@ -15,6 +15,7 @@ const CheckoutStepper = ({ stepStatus }) => {
 				type={stepStatus[0]}
 				text='Sign In'
 				icon={<GoSignIn className='w-full h-full' />}
+				path='/signin'
 			/>
 			<div
 				className={`flex-auto border-t transition duration-500 ease-in-out ${
@@ -25,6 +26,7 @@ const CheckoutStepper = ({ stepStatus }) => {
 				type={stepStatus[1]}
 				text='Shipping'
 				icon={<FaShippingFast className='w-full h-full' />}
+				path='/shipping'
 			/>
 			<div
 				className={`flex-auto border-t transition duration-500 ease-in-out ${
@@ -35,6 +37,7 @@ const CheckoutStepper = ({ stepStatus }) => {
 				type={stepStatus[2]}
 				text='Payment'
 				icon={<FaRegCreditCard className='w-full h-full' />}
+				path='/payment'
 			/>
 			<div
 				className={`flex-auto border-t transition duration-500 ease-in-out ${
@@ -45,6 +48,7 @@ const CheckoutStepper = ({ stepStatus }) => {
 				type={stepStatus[3]}
 				text='Place Order'
 				icon={<FaCartArrowDown className='w-full h-full' />}
+				path='/place-order'
 			/>
 		</div>
 	);
