@@ -24,7 +24,6 @@ const cartSlice = createSlice({
 			localStorage.setItem('shippingAddress', JSON.stringify(actions.payload));
 		},
 		storePaymentMethod: (state, actions) => {
-			console.log(actions.payload);
 			state.paymentMethod = actions.payload;
 			localStorage.setItem('paymentMethod', JSON.stringify(actions.payload));
 		}
