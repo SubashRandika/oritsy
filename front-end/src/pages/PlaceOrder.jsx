@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { cartSelector } from '../redux/slices/cartSlice';
@@ -6,6 +6,7 @@ import { FaCartArrowDown } from 'react-icons/fa';
 import CheckoutStepper from '../components/CheckoutStepper/CheckoutStepper';
 
 const PlaceOrder = () => {
+	const [prices] = useState({});
 	const {
 		cartItems,
 		shippingAddress: { address, city, postalCode, country },
@@ -16,20 +17,18 @@ const PlaceOrder = () => {
 		return (Math.round(value * 100) / 100).toFixed(2);
 	};
 
-	cartItems.itemsPrice = withDecimal(
+	prices.itemsPrice = withDecimal(
 		cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0)
 	);
 
-	cartItems.shippingPrice = withDecimal(cartItems.itemsPrice > 100 ? 0 : 100);
+	prices.shippingPrice = withDecimal(prices.itemsPrice > 100 ? 0 : 100);
 
-	cartItems.taxPrice = withDecimal(
-		Number((0.15 * cartItems.itemsPrice).toFixed(2))
-	);
+	prices.taxPrice = withDecimal(Number((0.15 * prices.itemsPrice).toFixed(2)));
 
-	cartItems.totalPrice = (
-		Number(cartItems.itemsPrice) +
-		Number(cartItems.shippingPrice) +
-		Number(cartItems.taxPrice)
+	prices.totalPrice = (
+		Number(prices.itemsPrice) +
+		Number(prices.shippingPrice) +
+		Number(prices.taxPrice)
 	).toFixed(2);
 
 	const handlePlaceOrder = (e) => {
@@ -111,25 +110,25 @@ const PlaceOrder = () => {
 							<p className='pl-6 py-4 flex-grow font-medium text-gray-600'>
 								Items
 							</p>
-							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${cartItems.itemsPrice}`}</p>
+							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${prices.itemsPrice}`}</p>
 						</div>
 						<div className='flex border-t border-gray-300'>
 							<p className='pl-6 py-4 flex-grow font-medium text-gray-600'>
 								Shipping
 							</p>
-							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${cartItems.shippingPrice}`}</p>
+							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${prices.shippingPrice}`}</p>
 						</div>
 						<div className='flex border-t border-gray-300'>
 							<p className='pl-6 py-4 flex-grow font-medium text-gray-600'>
 								Tax
 							</p>
-							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${cartItems.taxPrice}`}</p>
+							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${prices.taxPrice}`}</p>
 						</div>
 						<div className='flex border-t border-gray-300'>
 							<p className='pl-6 py-4 flex-grow font-medium text-gray-600'>
 								Total
 							</p>
-							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${cartItems.totalPrice}`}</p>
+							<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${prices.totalPrice}`}</p>
 						</div>
 						<div className='p-6 flex justify-center items-center border-t border-gray-300'>
 							<button
