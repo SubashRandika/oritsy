@@ -132,10 +132,10 @@ const PlaceOrder = () => {
 						</div>
 						<div className='p-6 flex justify-center items-center border-t border-gray-300'>
 							<button
-								className='flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-6 py-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+								className='flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-8 py-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
 								onClick={handlePlaceOrder}
 							>
-								<span className='mr-3 uppercase'>Place Order</span>
+								<span className='mr-6 uppercase'>Place Order</span>
 								<span className='text-xl'>
 									<FaCartArrowDown />
 								</span>
