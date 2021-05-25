@@ -4,6 +4,7 @@ import colors from 'colors';
 import connectDB from '../back-end/config/database.js';
 import productRoutes from './routes/product.js';
 import userRoutes from './routes/user.js';
+import orderRoutes from './routes/order.js';
 import { routeNotFount, errorHandler } from './middlewares/errors.js';
 
 colors.setTheme({
@@ -29,6 +30,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.use(routeNotFount);
 
