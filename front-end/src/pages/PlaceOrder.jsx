@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { cartSelector } from '../redux/slices/cartSlice';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaCartArrowDown } from 'react-icons/fa';
 import CheckoutStepper from '../components/CheckoutStepper/CheckoutStepper';
+import { cartSelector } from '../redux/slices/cartSlice';
+import { createOrderSelector } from '../redux/slices/createOrderSlice';
+import { createOrder } from '../redux/actions/orderActions';
 
 const PlaceOrder = () => {
+	const dispatch = useDispatch();
+	const history = useHistory();
 	const [prices] = useState({});
-	const {
-		cartItems,
-		shippingAddress: { address, city, postalCode, country },
-		paymentMethod
-	} = useSelector(cartSelector);
+	const { cartItems, shippingAddress, paymentMethod } =
+		useSelector(cartSelector);
+	const { order, success, loading } = useSelector(createOrderSelector);
 
 	const withDecimal = (value) => {
 		return (Math.round(value * 100) / 100).toFixed(2);
@@ -32,8 +34,25 @@ const PlaceOrder = () => {
 	).toFixed(2);
 
 	const handlePlaceOrder = (e) => {
-		console.log('Order Placed');
+		dispatch(
+			createOrder({
+				orderItems: cartItems,
+				shippingAddress,
+				paymentMethod,
+				itemsPrice: prices.itemsPrice,
+				shippingPrice: prices.shippingPrice,
+				taxPrice: prices.taxPrice,
+				totalPrice: prices.totalPrice
+			})
+		);
 	};
+
+	useEffect(() => {
+		if (success) {
+			history.push(`/order/${order._id}`);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [history, success]);
 
 	return (
 		<main className='container m-auto h-full my-6'>
@@ -52,9 +71,10 @@ const PlaceOrder = () => {
 							<p className='flex mt-4 text-md'>
 								<span className='font-bold text-gray-600'>Address :</span>
 								<span className='pl-4 text-gray-600'>
-									{`${address},`} <br />
-									{`${city}, ${postalCode},`} <br />
-									{country}
+									{`${shippingAddress.address},`} <br />
+									{`${shippingAddress.city}, ${shippingAddress.postalCode},`}{' '}
+									<br />
+									{shippingAddress.country}
 								</span>
 							</p>
 						</div>
@@ -135,10 +155,38 @@ const PlaceOrder = () => {
 								className='flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-8 py-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
 								onClick={handlePlaceOrder}
 							>
-								<span className='mr-6 uppercase'>Place Order</span>
-								<span className='text-xl'>
-									<FaCartArrowDown />
-								</span>
+								{loading ? (
+									<div className='flex justify-center items-center'>
+										<svg
+											className='animate-spin h-5 w-5 text-white mr-3'
+											xmlns='http://www.w3.org/2000/svg'
+											fill='none'
+											viewBox='0 0 24 24'
+										>
+											<circle
+												className='opacity-25'
+												cx='12'
+												cy='12'
+												r='10'
+												stroke='currentColor'
+												strokeWidth='4'
+											></circle>
+											<path
+												className='opacity-75'
+												fill='currentColor'
+												d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+											></path>
+										</svg>
+										<p>Placing Order</p>
+									</div>
+								) : (
+									<>
+										<span className='mr-6 uppercase'>Place Order</span>
+										<span className='text-xl'>
+											<FaCartArrowDown />
+										</span>
+									</>
+								)}
 							</button>
 						</div>
 					</div>
