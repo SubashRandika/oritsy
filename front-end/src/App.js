@@ -13,6 +13,7 @@ import Shipping from './pages/Shipping';
 import PrivateRoute from './components/PrivateRoute';
 import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
+import OrderDetails from './pages/OrderDetails';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -47,6 +48,9 @@ const App = () => {
 					<Route path='/cart/:id?'>
 						<Cart />
 					</Route>
+					<PrivateRoute exact path='/order/:id'>
+						<OrderDetails />
+					</PrivateRoute>
 					<Route exact path='/'>
 						<Home />
 					</Route>

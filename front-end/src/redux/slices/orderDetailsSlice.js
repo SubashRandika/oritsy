@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getOrderDetails } from '../actions/orderActions.js';
 
 const initialState = {
-	orderItems: [],
-	shippingAddress: {},
 	loading: true
 };
 
@@ -12,8 +10,6 @@ const orderDetailsSlice = createSlice({
 	initialState,
 	extraReducers: {
 		[getOrderDetails.pending]: (state) => {
-			state.orderItems = [];
-			state.shippingAddress = {};
 			state.loading = true;
 		},
 		[getOrderDetails.fulfilled]: (state, { payload }) => {
