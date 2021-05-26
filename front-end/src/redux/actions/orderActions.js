@@ -72,3 +72,35 @@ export const getOrderDetails = createAsyncThunk(
 		}
 	}
 );
+
+export const payOrder = createAsyncThunk(
+	'orders/pay',
+	async ({ orderId, paymentResult }, { rejectWithValue, getState }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.put(
+				`/api/orders/${orderId}/pay`,
+				paymentResult,
+				config
+			);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			toast(message, tostErrorOptions);
+
+			return rejectWithValue({ message });
+		}
+	}
+);
