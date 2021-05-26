@@ -56,4 +56,31 @@ const getOrderById = asyncHandler(async (req, res) => {
 	res.status(200).json(order);
 });
 
-export { createOrder, getOrderById };
+/**
+ * @desc    Update order to paid status
+ * @route   PUT /api/orders/:id/pay
+ * @access  Private
+ */
+const updateOrderToPaidStatus = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+
+	if (!order) {
+		res.status(404);
+		throw new Error('Order does not exist');
+	}
+
+	order.isPaid = true;
+	order.paidAt = Date.now();
+	order.paymentResult = {
+		id: req.body.id,
+		status: req.body.status,
+		updatedTime: req.body.update_time,
+		emailAddress: req.body.email_address
+	};
+
+	const updatedOrder = await order.save();
+
+	res.status(200).json(updatedOrder);
+});
+
+export { createOrder, getOrderById, updateOrderToPaidStatus };
