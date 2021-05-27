@@ -21,7 +21,7 @@ const orderPaymentSlice = createSlice({
 		},
 		[payOrder.rejected]: (state, { payload }) => {
 			state.isPaying = false;
-			state.error = payload.message;
+			state.error = payload?.message;
 		}
 	}
 });

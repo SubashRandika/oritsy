@@ -18,7 +18,7 @@ const userRegisterSlice = createSlice({
 		},
 		[register.rejected]: (state, { payload }) => {
 			state.loading = false;
-			state.error = payload.message;
+			state.error = payload?.message;
 		}
 	}
 });
