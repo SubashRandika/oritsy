@@ -1,15 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrderDetails } from '../redux/actions/orderActions';
+import axios from 'axios';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { toast } from 'react-toastify';
+import dayjs from 'dayjs';
+import { getOrderDetails, payOrder } from '../redux/actions/orderActions';
 import { orderDetailsSelector } from '../redux/slices/orderDetailsSlice';
+import { orderPaymentSelector } from '../redux/slices/orderPaymentSlice';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
 
+const tostOptions = {
+	position: 'top-center',
+	autoClose: '10000',
+	type: 'error'
+};
+
 const OrderDetails = () => {
-	const { id } = useParams();
+	const [clientId, setClientId] = useState(null);
+	const { id: orderId } = useParams();
 	const dispatch = useDispatch();
 	const { order, loading } = useSelector(orderDetailsSelector);
+	const { paySuccess } = useSelector(orderPaymentSelector);
 
 	const withDecimal = (value) => {
 		return (Math.round(value * 100) / 100).toFixed(2);
@@ -24,11 +37,54 @@ const OrderDetails = () => {
 		);
 	};
 
+	const handleOrderCreation = (data, actions) => {
+		return actions.order.create({
+			purchase_units: [
+				{
+					amount: {
+						currency_code: 'USD',
+						value: order.totalPrice
+					}
+				}
+			]
+		});
+	};
+
+	const handlePaymentSuccess = (data, actions) => {
+		return actions.order.capture().then((details) => {
+			const {
+				id,
+				status,
+				update_time,
+				payer: { email_address }
+			} = details;
+
+			dispatch(
+				payOrder({
+					orderId,
+					paymentResult: { id, status, update_time, email_address }
+				})
+			);
+		});
+	};
+
+	const handlePaymentFailed = (err) => {
+		console.error(err);
+		toast('Unable to process your payment with PayPal', tostOptions);
+	};
+
 	useEffect(() => {
-		if (!order) {
-			dispatch(getOrderDetails(id));
+		const fetchPaypalClientId = async () => {
+			const { data: clientKey } = await axios.get('/api/config/paypal');
+			setClientId(clientKey);
+		};
+
+		if (!clientId) {
+			fetchPaypalClientId();
 		}
-	}, [dispatch, id, order]);
+
+		dispatch(getOrderDetails(orderId));
+	}, [clientId, dispatch, orderId, paySuccess]);
 
 	return (
 		<main className='container m-auto h-full my-6'>
@@ -80,7 +136,10 @@ const OrderDetails = () => {
 										<div className='mt-3'>
 											<Alert
 												type='success'
-												body={`Delivered on ${order.deliveredAt}`}
+												header='Delivered on'
+												body={dayjs(`${order.deliveredAt}`).format(
+													'ddd, MMM D, YYYY h:mm A'
+												)}
 											/>
 										</div>
 									) : (
@@ -101,7 +160,13 @@ const OrderDetails = () => {
 									</p>
 									{order.isPaid ? (
 										<div className='mt-3'>
-											<Alert type='success' body={`Paid on ${order.paidAt}`} />
+											<Alert
+												type='success'
+												header='Paid on'
+												body={dayjs(`${order.paidAt}`).format(
+													'ddd, MMM D, YYYY h:mm A'
+												)}
+											/>
 										</div>
 									) : (
 										<div className='mt-3'>
@@ -172,6 +237,17 @@ const OrderDetails = () => {
 									</p>
 									<p className='py-4 w-40 text-gray-600 font-extrabold'>{`$ ${order.totalPrice}`}</p>
 								</div>
+								{!order.isPaid && (
+									<div className='p-6 w-full border-t border-gray-300'>
+										<PayPalScriptProvider options={{ 'client-id': clientId }}>
+											<PayPalButtons
+												createOrder={handleOrderCreation}
+												onApprove={handlePaymentSuccess}
+												onError={handlePaymentFailed}
+											/>
+										</PayPalScriptProvider>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
