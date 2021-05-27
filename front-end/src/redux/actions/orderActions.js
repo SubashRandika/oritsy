@@ -104,3 +104,30 @@ export const payOrder = createAsyncThunk(
 		}
 	}
 );
+
+export const getAuthUserOrders = createAsyncThunk(
+	'orders/self',
+	async (_, { rejectWithValue, getState }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.get('/api/orders/self', config);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			toast(message, tostErrorOptions);
+
+			return rejectWithValue({ message });
+		}
+	}
+);

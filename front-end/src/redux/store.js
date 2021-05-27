@@ -9,6 +9,7 @@ import userProfileUpdateSlice from './slices/userProfileUpdateSlice';
 import createOrderSlice from './slices/createOrderSlice';
 import orderDetailsSlice from './slices/orderDetailsSlice';
 import orderPaymentSlice from './slices/orderPaymentSlice';
+import selfOrdersListSlice from './slices/selfOrdersListSlice';
 
 const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
@@ -37,7 +38,8 @@ export default configureStore({
 		userProfileUpdate: userProfileUpdateSlice,
 		createOrder: createOrderSlice,
 		orderDetails: orderDetailsSlice,
-		orderPayment: orderPaymentSlice
+		orderPayment: orderPaymentSlice,
+		selfOrders: selfOrdersListSlice
 	},
 	preloadedState: {
 		cart: {

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, Link } from 'react-router-dom';
+import { FiShoppingBag } from 'react-icons/fi';
+import dayjs from 'dayjs';
 import {
 	getUserDetails,
 	updateUserProfile
 } from '../redux/actions/userActions';
+import { getAuthUserOrders } from '../redux/actions/orderActions';
 import { userDetailsSelector } from '../redux/slices/userProfileSlice';
 import { userLoginSelector, logout } from '../redux/slices/userLoginSlice';
 import { userProfileUpdateSelector } from '../redux/slices/userProfileUpdateSlice';
+import { selfOrdersSelector } from '../redux/slices/selfOrdersListSlice';
 import Loader from '../components/Loader/Loader';
 
 const Profile = () => {
@@ -24,6 +28,7 @@ const Profile = () => {
 	const { loading, error, user } = useSelector(userDetailsSelector);
 	const { userInfo } = useSelector(userLoginSelector);
 	const { loading: isUpdating } = useSelector(userProfileUpdateSelector);
+	const { loading: loadingOrders, orders } = useSelector(selfOrdersSelector);
 
 	const handleOnChange = (e) => {
 		setProfile({
@@ -43,6 +48,7 @@ const Profile = () => {
 		} else {
 			if (!user) {
 				dispatch(getUserDetails({ id: 'profile' }));
+				dispatch(getAuthUserOrders());
 			} else {
 				setProfile({
 					name: user.name,
@@ -72,16 +78,14 @@ const Profile = () => {
 	};
 
 	return (
-		<div className='container m-auto h-full my-10'>
-			<div className='grid grid-cols-4 gap-10 h-full'>
-				{loading ? (
-					<div className='w-full flex flex-col items-center justify-center'>
-						<Loader />
-						<div className='text-lg text-gray-500 font-semibold'>
-							Loading...
-						</div>
-					</div>
-				) : (
+		<main className='container m-auto h-full my-10'>
+			{loading || loadingOrders ? (
+				<div className='w-full h-full flex flex-col items-center justify-center'>
+					<Loader />
+					<div className='text-lg text-gray-500 font-semibold'>Loading...</div>
+				</div>
+			) : (
+				<div className='grid grid-cols-4 gap-10 h-full'>
 					<div>
 						<h2 className='text-2xl font-semibold mb-6'>Update Profile</h2>
 						<p
@@ -197,14 +201,112 @@ const Profile = () => {
 							</div>
 						</form>
 					</div>
-				)}
-
-				<div className='col-span-3'>
-					<h2 className='text-2xl font-semibold mb-6'>Your Orders</h2>
-					<p>Orders List Goes Here</p>
+					<div className='col-span-3'>
+						<h2 className='text-2xl font-semibold mb-6'>Your Orders</h2>
+						{orders?.length === 0 ? (
+							<div className='h-56 flex flex-col justify-center items-center'>
+								<FiShoppingBag className='text-6xl text-gray-200' />
+								<h2 className='text-3xl font-semibold py-2'>
+									No orders placed yet
+								</h2>
+								<p className='text-gray-500'>
+									Please place some orders by checkout some of our products
+								</p>
+							</div>
+						) : (
+							<div className='shadow overflow-hidden border-b border-gray-200'>
+								<table className='min-w-full divide-y divide-gray-200'>
+									<thead className='bg-gray-50'>
+										<tr>
+											<th
+												scope='col'
+												className='px-6 py-3 text-left text-sm font-bold text-gray-500 uppercase tracking-wider'
+											>
+												Id
+											</th>
+											<th
+												scope='col'
+												className='px-6 py-3 text-left text-sm font-bold text-gray-500 uppercase tracking-wider'
+											>
+												Created At
+											</th>
+											<th
+												scope='col'
+												className='px-6 py-3 text-left text-sm font-bold text-gray-500 uppercase tracking-wider'
+											>
+												Total
+											</th>
+											<th
+												scope='col'
+												className='px-6 py-3 text-left text-sm font-bold text-gray-500 uppercase tracking-wider'
+											>
+												Paid
+											</th>
+											<th
+												scope='col'
+												className='px-6 py-3 text-left text-sm font-bold text-gray-500 uppercase tracking-wider'
+											>
+												Delivered
+											</th>
+											<th scope='col' className='relative px-6 py-3'>
+												<span className='sr-only'>Details</span>
+											</th>
+										</tr>
+									</thead>
+									<tbody className='bg-white divide-y divide-gray-200'>
+										{orders.map((order) => (
+											<tr key={order._id}>
+												<td className='px-6 py-4 whitespace-nowrap'>
+													<div className='text-sm text-gray-900'>
+														{order._id}
+													</div>
+												</td>
+												<td className='px-6 py-4 whitespace-nowrap'>
+													<div className='text-sm text-gray-900'>
+														{dayjs(order.createdAt).format('YYYY-MM-DD')}
+													</div>
+												</td>
+												<td className='px-6 py-4 whitespace-nowrap'>
+													<div className='text-sm text-gray-900'>
+														{`$ ${order.totalPrice}`}
+													</div>
+												</td>
+												<td className='px-6 py-4 whitespace-nowrap text-sm'>
+													{order.isPaid ? (
+														dayjs(order.paidAt).format('YYYY-MM-DD')
+													) : (
+														<span className='px-3 inline-flex leading-5 font-semibold rounded-full bg-red-100 text-red-800'>
+															Not
+														</span>
+													)}
+												</td>
+												<td className='px-6 py-4 whitespace-nowrap text-sm'>
+													{order.isDelivered ? (
+														dayjs(order.deliveredAt).format('YYYY-MM-DD')
+													) : (
+														<span className='px-3 inline-flex leading-5 font-semibold rounded-full bg-red-100 text-red-800'>
+															Not
+														</span>
+													)}
+												</td>
+												<td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+													<Link
+														to={`/order/${order._id}`}
+														className='text-blue-500 font-semibold hover:underline'
+													>
+														Details
+													</Link>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						)}
+					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</main>
 	);
 };
 
