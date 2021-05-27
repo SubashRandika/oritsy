@@ -31,4 +31,13 @@ const secure = asyncHandler(async (req, res, next) => {
 	}
 });
 
-export default secure;
+const adminOnly = (req, res, next) => {
+	if (req.user && req.user.isAdmin) {
+		next();
+	} else {
+		res.status(403);
+		throw new Error('You are not authorized to access. Sign in as admin');
+	}
+};
+
+export { secure, adminOnly };

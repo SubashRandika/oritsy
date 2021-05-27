@@ -123,4 +123,21 @@ const updateUserProfile = async (req, res) => {
 	});
 };
 
-export { userLogin, registerUser, getUserProfile, updateUserProfile };
+/**
+ * @desc    Get all users for only admin
+ * @route   GET /api/users
+ * @access  Private/Admin
+ */
+const getAllUsers = async (req, res) => {
+	const users = await User.find({});
+
+	res.status(200).json(users);
+};
+
+export {
+	userLogin,
+	registerUser,
+	getUserProfile,
+	updateUserProfile,
+	getAllUsers
+};

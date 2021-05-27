@@ -4,12 +4,13 @@ import {
 	userLogin,
 	registerUser,
 	getUserProfile,
-	updateUserProfile
+	updateUserProfile,
+	getAllUsers
 } from '../controllers/userController.js';
-import secure from '../middlewares/auth.js';
+import { secure, adminOnly } from '../middlewares/auth.js';
 
 // all auth and user related routes
-router.route('/').post(registerUser);
+router.route('/').post(registerUser).get(secure, adminOnly, getAllUsers);
 router.route('/login').post(userLogin);
 router
 	.route('/profile')

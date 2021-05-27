@@ -6,7 +6,7 @@ import {
 	getOrderById,
 	updateOrderToPaidStatus
 } from '../controllers/orderController.js';
-import secure from '../middlewares/auth.js';
+import { secure } from '../middlewares/auth.js';
 
 // all order related routes
 router.route('/').post(secure, createOrder);
