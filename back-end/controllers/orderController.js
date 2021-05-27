@@ -83,4 +83,20 @@ const updateOrderToPaidStatus = asyncHandler(async (req, res) => {
 	res.status(200).json(updatedOrder);
 });
 
-export { createOrder, getOrderById, updateOrderToPaidStatus };
+/**
+ * @desc    Get authenticated user orders
+ * @route   GET /api/orders/self
+ * @access  Private
+ */
+const getAuthUserOrders = asyncHandler(async (req, res) => {
+	const orders = await Order.find({ user: req.user._id });
+
+	res.status(200).json(orders);
+});
+
+export {
+	createOrder,
+	getOrderById,
+	updateOrderToPaidStatus,
+	getAuthUserOrders
+};
