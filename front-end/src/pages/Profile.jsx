@@ -45,18 +45,17 @@ const Profile = () => {
 
 		if (!userInfo) {
 			history.push('/signin');
-		} else {
-			if (!user) {
-				dispatch(getUserDetails({ id: 'profile' }));
-				dispatch(getAuthUserOrders());
-			} else {
-				setProfile({
-					name: user.name,
-					email: user.email
-				});
-			}
 		}
-	}, [dispatch, history, userInfo, user, error]);
+
+		dispatch(getUserDetails({ id: 'profile' }));
+
+		setProfile({
+			name: user?.name,
+			email: user?.email
+		});
+
+		dispatch(getAuthUserOrders());
+	}, [dispatch, history, userInfo, user?.name, user?.email, error]);
 
 	const handleUpdateProfile = (e) => {
 		e.preventDefault();

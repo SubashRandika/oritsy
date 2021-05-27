@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getUserDetails } from '../actions/userActions';
 
 const initialState = {
-	user: null
+	user: null,
+	loading: false
 };
 
 const userDetailsSlice = createSlice({
@@ -10,9 +11,7 @@ const userDetailsSlice = createSlice({
 	initialState,
 	extraReducers: {
 		[getUserDetails.pending]: (state) => {
-			state.user = null;
 			state.loading = true;
-			state.error = null;
 		},
 		[getUserDetails.fulfilled]: (state, { payload }) => {
 			state.user = payload;
