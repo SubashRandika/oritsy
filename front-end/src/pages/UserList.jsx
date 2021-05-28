@@ -1,18 +1,26 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import Loader from '../components/Loader/Loader';
 import { listUsers } from '../redux/actions/userActions';
 import { userListSelector } from '../redux/slices/userListSlice';
+import { userLoginSelector } from '../redux/slices/userLoginSlice';
 
 const UserList = () => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { loading, users } = useSelector(userListSelector);
+	const { userInfo } = useSelector(userLoginSelector);
 
 	useEffect(() => {
-		dispatch(listUsers());
-	}, [dispatch]);
+		if (userInfo?.isAdmin) {
+			dispatch(listUsers());
+		} else {
+			history.push('/');
+		}
+	}, [dispatch, history, userInfo?.isAdmin]);
 
 	return (
 		<main className='container m-auto h-full my-6'>
@@ -90,8 +98,8 @@ const UserList = () => {
 										</td>
 										<td className='px-6 py-4 whitespace-nowrap text-lg'>
 											<div className='flex item-center justify-center'>
-												<FiEdit className='mr-3 transform hover:text-yellow-600 transition-all duration-300 ease-in hover:scale-110 cursor-pointer' />
-												<FaRegTrashAlt className='mr-3 transform hover:text-red-600 transition-all duration-300 ease-in hover:scale-110 cursor-pointer' />
+												<FiEdit className='mr-3 hover:text-yellow-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer' />
+												<FaRegTrashAlt className='mr-3 hover:text-red-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer' />
 											</div>
 										</td>
 									</tr>
