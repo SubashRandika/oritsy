@@ -124,7 +124,7 @@ const updateUserProfile = async (req, res) => {
 };
 
 /**
- * @desc    Get all users for only admin
+ * @desc    Get all users. Only for admin
  * @route   GET /api/users
  * @access  Private/Admin
  */
@@ -134,10 +134,28 @@ const getAllUsers = async (req, res) => {
 	res.status(200).json(users);
 };
 
+/**
+ * @desc    Delete a user. Only for admin
+ * @route   DELETE /api/users/:id
+ * @access  Private/Admin
+ */
+const deleteUser = async (req, res) => {
+	const user = await User.findById(req.params.id);
+
+	if (!user) {
+		res.status(404);
+		throw new Error('User cannot be found');
+	}
+
+	await user.remove();
+	res.status(200).json({ message: 'User successfully deleted' });
+};
+
 export {
 	userLogin,
 	registerUser,
 	getUserProfile,
 	updateUserProfile,
-	getAllUsers
+	getAllUsers,
+	deleteUser
 };

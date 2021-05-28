@@ -5,7 +5,8 @@ import {
 	registerUser,
 	getUserProfile,
 	updateUserProfile,
-	getAllUsers
+	getAllUsers,
+	deleteUser
 } from '../controllers/userController.js';
 import { secure, adminOnly } from '../middlewares/auth.js';
 
@@ -16,5 +17,6 @@ router
 	.route('/profile')
 	.get(secure, getUserProfile)
 	.put(secure, updateUserProfile);
+router.route('/:id').delete(secure, adminOnly, deleteUser);
 
 export default router;
