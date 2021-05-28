@@ -124,3 +124,30 @@ export const updateUserProfile = createAsyncThunk(
 		}
 	}
 );
+
+export const listUsers = createAsyncThunk(
+	'users/list',
+	async (_, { rejectWithValue, getState }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.get('/api/users', config);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			toast(message, tostErrorOptions);
+
+			return rejectWithValue({ message });
+		}
+	}
+);

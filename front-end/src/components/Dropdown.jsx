@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { HiChevronDown } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
-const Dropdown = ({ name, email, logout }) => {
+const Dropdown = ({ name, email, isAdmin, logout }) => {
 	const [isOpen, setOpen] = useState(false);
 	const dropdown = createRef();
 
@@ -53,6 +53,31 @@ const Dropdown = ({ name, email, logout }) => {
 						<p className='text-md'>Signed in as :</p>
 						<p className='text-md text-blue-400 pt-1'>{email}</p>
 					</div>
+					{isAdmin ? (
+						<div className='py-1'>
+							<Link
+								className='text-gray-700 hover:text-gray-800 flex justify-between w-full px-4 py-2 text-md leading-5 text-left hover:bg-gray-100'
+								to='/admin/user-list'
+								role='menuitem'
+							>
+								Users
+							</Link>
+							<Link
+								className='text-gray-700 hover:text-gray-800 flex justify-between w-full px-4 py-2 text-md leading-5 text-left hover:bg-gray-100'
+								to='/admin/product-list'
+								role='menuitem'
+							>
+								Products
+							</Link>
+							<Link
+								className='text-gray-700 hover:text-gray-800 flex justify-between w-full px-4 py-2 text-md leading-5 text-left hover:bg-gray-100'
+								to='/admin/order-list'
+								role='menuitem'
+							>
+								Orders
+							</Link>
+						</div>
+					) : null}
 					<div className='py-1'>
 						<Link
 							className='text-gray-700 hover:text-gray-800 flex justify-between w-full px-4 py-2 text-md leading-5 text-left hover:bg-gray-100'
@@ -78,6 +103,7 @@ const Dropdown = ({ name, email, logout }) => {
 Dropdown.propTypes = {
 	name: PropTypes.string.isRequired,
 	email: PropTypes.string.isRequired,
+	isAdmin: PropTypes.bool.isRequired,
 	logout: PropTypes.func.isRequired
 };
 

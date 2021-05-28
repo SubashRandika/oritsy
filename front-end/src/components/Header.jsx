@@ -60,6 +60,7 @@ const Header = () => {
 						<Dropdown
 							name={userInfo?.name}
 							email={userInfo?.email}
+							isAdmin={userInfo?.isAdmin}
 							logout={logoutHandler}
 						/>
 					) : (

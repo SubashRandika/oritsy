@@ -16,6 +16,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import OrderDetails from './pages/OrderDetails';
+import UserList from './pages/UserList';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -64,6 +65,9 @@ const App = () => {
 						</Route>
 						<PrivateRoute exact path='/order/:id'>
 							<OrderDetails />
+						</PrivateRoute>
+						<PrivateRoute exact path='/admin/user-list'>
+							<UserList />
 						</PrivateRoute>
 						<Route exact path='/'>
 							<Home />
