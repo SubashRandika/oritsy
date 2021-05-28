@@ -216,7 +216,7 @@ const Profile = () => {
 							<div className='shadow overflow-hidden border-b border-gray-200'>
 								<table className='min-w-full divide-y divide-gray-200'>
 									<thead className='bg-gray-50'>
-										<tr>
+										<tr className='bg-gray-100 text-gray-600 uppercase text-sm'>
 											<th
 												scope='col'
 												className='px-6 py-3 text-left text-sm font-bold text-gray-500 uppercase tracking-wider'
@@ -253,8 +253,11 @@ const Profile = () => {
 										</tr>
 									</thead>
 									<tbody className='bg-white divide-y divide-gray-200'>
-										{orders.map((order) => (
-											<tr key={order._id}>
+										{orders.map((order, idx) => (
+											<tr
+												key={order._id}
+												className={`${(idx + 1) % 2 === 0 ? 'bg-gray-50' : ''}`}
+											>
 												<td className='px-6 py-4 whitespace-nowrap'>
 													<div className='text-sm text-gray-900'>
 														{order._id}
@@ -275,7 +278,7 @@ const Profile = () => {
 														dayjs(order.paidAt).format('YYYY-MM-DD')
 													) : (
 														<span className='px-3 inline-flex leading-5 font-semibold rounded-full bg-red-100 text-red-800'>
-															Not
+															No
 														</span>
 													)}
 												</td>
@@ -284,7 +287,7 @@ const Profile = () => {
 														dayjs(order.deliveredAt).format('YYYY-MM-DD')
 													) : (
 														<span className='px-3 inline-flex leading-5 font-semibold rounded-full bg-red-100 text-red-800'>
-															Not
+															No
 														</span>
 													)}
 												</td>
