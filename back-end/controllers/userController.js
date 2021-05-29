@@ -151,11 +151,57 @@ const deleteUser = async (req, res) => {
 	res.status(200).json({ message: 'User successfully deleted' });
 };
 
+/**
+ * @desc    Get any user by id. Only for admin
+ * @route   GET /api/users/:id
+ * @access  Private/Admin
+ */
+const getUserById = async (req, res) => {
+	const user = await User.findById(req.params.id).select('-password');
+
+	if (!user) {
+		res.status(404);
+		throw new Error('User cannot be found');
+	}
+
+	res.status(200).json(user);
+};
+
+/**
+ * @desc    Update any user by id. Only for admin
+ * @route   PUT /api/users/:id
+ * @access  Private/Admin
+ */
+const updateUser = async (req, res) => {
+	const user = await User.findById(req.params.id);
+
+	if (!user) {
+		res.status(404);
+		throw new Error('User cannot be found');
+	}
+
+	user.name = req.body.name || user.name;
+	user.email = req.body.email || user.email;
+	user.isAdmin = req.body.isAdmin || user.isAdmin;
+
+	const updatedUser = await user.save();
+	const { _id, name, email, isAdmin } = updatedUser;
+
+	res.status(200).json({
+		_id,
+		name,
+		email,
+		isAdmin
+	});
+};
+
 export {
 	userLogin,
 	registerUser,
 	getUserProfile,
 	updateUserProfile,
 	getAllUsers,
-	deleteUser
+	deleteUser,
+	getUserById,
+	updateUser
 };
