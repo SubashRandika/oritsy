@@ -8,7 +8,7 @@ import {
 	updateUserProfile
 } from '../redux/actions/userActions';
 import { getAuthUserOrders } from '../redux/actions/orderActions';
-import { userDetailsSelector } from '../redux/slices/userProfileSlice';
+import { userDetailsSelector } from '../redux/slices/userDetailsSlice';
 import { userLoginSelector, logout } from '../redux/slices/userLoginSlice';
 import { userProfileUpdateSelector } from '../redux/slices/userProfileUpdateSlice';
 import { selfOrdersSelector } from '../redux/slices/selfOrdersListSlice';
@@ -47,7 +47,7 @@ const Profile = () => {
 			history.push('/signin');
 		}
 
-		dispatch(getUserDetails({ id: 'profile' }));
+		dispatch(getUserDetails('profile'));
 
 		setProfile({
 			name: user?.name,

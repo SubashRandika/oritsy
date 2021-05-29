@@ -71,7 +71,7 @@ export const register = createAsyncThunk(
 
 export const getUserDetails = createAsyncThunk(
 	'users/profile',
-	async ({ id }, { rejectWithValue, getState }) => {
+	async (id, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
 		} = getState();
