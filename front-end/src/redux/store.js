@@ -7,6 +7,7 @@ import userRegisterSlice from './slices/userRegisterSlice';
 import userProfileSlice from './slices/userProfileSlice';
 import userProfileUpdateSlice from './slices/userProfileUpdateSlice';
 import userListSlice from './slices/userListSlice';
+import userDeleteSlice from './slices/userDeleteSlice';
 import createOrderSlice from './slices/createOrderSlice';
 import orderDetailsSlice from './slices/orderDetailsSlice';
 import orderPaymentSlice from './slices/orderPaymentSlice';
@@ -38,6 +39,7 @@ export default configureStore({
 		userDetails: userProfileSlice,
 		userProfileUpdate: userProfileUpdateSlice,
 		userList: userListSlice,
+		userDelete: userDeleteSlice,
 		createOrder: createOrderSlice,
 		orderDetails: orderDetailsSlice,
 		orderPayment: orderPaymentSlice,

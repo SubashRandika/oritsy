@@ -1,18 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegTrashAlt } from 'react-icons/fa';
+import { IoWarningOutline } from 'react-icons/io5';
 import Loader from '../components/Loader/Loader';
-import { listUsers } from '../redux/actions/userActions';
+import { deleteUser, listUsers } from '../redux/actions/userActions';
 import { userListSelector } from '../redux/slices/userListSlice';
 import { userLoginSelector } from '../redux/slices/userLoginSlice';
+import { userDeleteSelector } from '../redux/slices/userDeleteSlice';
+import ConfirmModal from '../components/ConfirmModal';
 
 const UserList = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { loading, users } = useSelector(userListSelector);
 	const { userInfo } = useSelector(userLoginSelector);
+	const { success: deleteSuccess } = useSelector(userDeleteSelector);
+	const [showModal, setShowModal] = useState(false);
+	const [userId, setUserId] = useState('');
 
 	useEffect(() => {
 		if (userInfo?.isAdmin) {
@@ -20,7 +26,26 @@ const UserList = () => {
 		} else {
 			history.push('/');
 		}
-	}, [dispatch, history, userInfo?.isAdmin]);
+	}, [dispatch, history, userInfo?.isAdmin, deleteSuccess]);
+
+	const handleUserEdit = (userId) => {
+		console.log('User Edited', userId);
+		setUserId(userId);
+	};
+
+	const handleUserDelete = (userId) => {
+		setShowModal(true);
+		setUserId(userId);
+	};
+
+	const handleCancel = () => {
+		setShowModal(false);
+	};
+
+	const handleConfirmAction = () => {
+		setShowModal(false);
+		dispatch(deleteUser(userId));
+	};
 
 	return (
 		<main className='container m-auto h-full my-6'>
@@ -98,14 +123,28 @@ const UserList = () => {
 										</td>
 										<td className='px-6 py-4 whitespace-nowrap text-lg'>
 											<div className='flex item-center justify-center'>
-												<FiEdit className='mr-3 hover:text-yellow-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer' />
-												<FaRegTrashAlt className='mr-3 hover:text-red-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer' />
+												<FiEdit
+													className='mr-3 hover:text-yellow-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer'
+													onClick={() => handleUserEdit(user._id)}
+												/>
+												<FaRegTrashAlt
+													className='mr-3 hover:text-red-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer'
+													onClick={() => handleUserDelete(user._id)}
+												/>
 											</div>
 										</td>
 									</tr>
 								))}
 							</tbody>
 						</table>
+						<ConfirmModal
+							title='Delete Confirmation'
+							body='Are you sure? Do you want to delete this user?'
+							icon={<IoWarningOutline className='h-6 w-6 text-red-600' />}
+							show={showModal}
+							confirmAction={handleConfirmAction}
+							onCancel={handleCancel}
+						/>
 					</div>
 				</div>
 			)}

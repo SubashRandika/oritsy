@@ -27,7 +27,7 @@ const Dropdown = ({ name, email, isAdmin, logout }) => {
 
 	return (
 		<div
-			className='dropdown relative inline-block text-left z-50'
+			className='dropdown relative inline-block text-left z-20'
 			ref={dropdown}
 		>
 			<div onClick={handleMenuOpen}>

@@ -9,6 +9,26 @@ module.exports = {
 				linkedin: '#0a66c2',
 				github: '#211F1F',
 				pinterest: '#bd081c'
+			},
+			keyframes: {
+				'overlay-in': {
+					from: { opacity: 0 },
+					to: { opacity: 1 }
+				},
+				'modal-in': {
+					from: {
+						opacity: 0,
+						transform: 'translateY(16px) scale(0.95, 0.95)'
+					},
+					to: {
+						opacity: 1,
+						transform: 'translateY(0) scale(1, 1)'
+					}
+				}
+			},
+			animation: {
+				'backdrop-in': 'overlay-in 0.3s ease-out',
+				'confirm-in': 'modal-in 0.3s ease-out'
 			}
 		},
 		boxShadow: {
