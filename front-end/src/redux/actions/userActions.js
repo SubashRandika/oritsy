@@ -178,3 +178,31 @@ export const deleteUser = createAsyncThunk(
 		}
 	}
 );
+
+export const updateUser = createAsyncThunk(
+	'users/update',
+	async (user, { rejectWithValue, getState }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			toast(message, tostErrorOptions);
+
+			return rejectWithValue({ message });
+		}
+	}
+);

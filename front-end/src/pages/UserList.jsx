@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegTrashAlt } from 'react-icons/fa';
@@ -27,10 +27,6 @@ const UserList = () => {
 			history.push('/');
 		}
 	}, [dispatch, history, userInfo?.isAdmin, deleteSuccess]);
-
-	const handleUserEdit = (userId) => {
-		history.push(`/admin/user/${userId}/edit`);
-	};
 
 	const handleUserDelete = (userId) => {
 		setShowModal(true);
@@ -122,10 +118,9 @@ const UserList = () => {
 										</td>
 										<td className='px-6 py-4 whitespace-nowrap text-lg'>
 											<div className='flex item-center justify-center'>
-												<FiEdit
-													className='mr-3 hover:text-yellow-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer'
-													onClick={() => handleUserEdit(user._id)}
-												/>
+												<Link to={`/admin/user/${user._id}/edit`}>
+													<FiEdit className='mr-3 hover:text-yellow-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer' />
+												</Link>
 												<FaRegTrashAlt
 													className='mr-3 hover:text-red-600 transition duration-500 ease-in-out transform hover:scale-125 cursor-pointer'
 													onClick={() => handleUserDelete(user._id)}
