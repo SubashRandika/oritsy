@@ -38,7 +38,7 @@ const ProductList = () => {
 					<div className='text-lg text-gray-500 font-semibold'>Loading...</div>
 				</div>
 			) : (
-				<div className='max-w-6xl mx-auto mt-10'>
+				<div className='max-w-8xl mx-auto mt-10'>
 					<div className='flex items-center justify-between mb-6'>
 						<h1 className='text-2xl font-semibold'>Products List</h1>
 						<button className='flex items-center justify-around w-52 bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white text-lg font-semibold px-6 py-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out'>
