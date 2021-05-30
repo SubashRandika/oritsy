@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ToggleSwitch.styles.css';
 
 const ToggleSwitch = ({ isAdmin, handleOnChange }) => {
@@ -19,6 +20,11 @@ const ToggleSwitch = ({ isAdmin, handleOnChange }) => {
 			</div>
 		</label>
 	);
+};
+
+ToggleSwitch.propType = {
+	isAdmin: PropTypes.bool.isRequired,
+	handleOnChange: PropTypes.func.isRequired
 };
 
 export default ToggleSwitch;
