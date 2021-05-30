@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FaPlus, FaRegTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
+import { IoWarningOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { productsSelector } from '../redux/slices/productsSlice';
-import { fetchProducts } from '../redux/actions/productActions';
+import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
+import { userLoginSelector } from '../redux/slices/userLoginSlice';
+import { productDeleteSelector } from '../redux/slices/productDeleteSlice';
 import Loader from '../components/Loader/Loader';
+import ConfirmModal from '../components/ConfirmModal';
 
 const tostOptions = {
 	position: 'top-center',
@@ -16,18 +20,37 @@ const tostOptions = {
 
 const ProductList = () => {
 	const dispatch = useDispatch();
+	const history = useHistory();
+	const [showModal, setShowModal] = useState(false);
+	const [productId, setProductId] = useState('');
+	const { userInfo } = useSelector(userLoginSelector);
 	const { products, loading, error } = useSelector(productsSelector);
+	const { success: deleteSuccess } = useSelector(productDeleteSelector);
 
 	useEffect(() => {
-		dispatch(fetchProducts());
+		if (userInfo?.isAdmin) {
+			dispatch(fetchProducts());
+		} else {
+			history.push('/');
+		}
 
 		if (error) {
 			toast('Unable to fetch products list', tostOptions);
 		}
-	}, [dispatch, error]);
+	}, [dispatch, error, deleteSuccess, userInfo?.isAdmin, history]);
 
-	const handleProductDelete = (productId) => {
-		console.log(productId);
+	const handleProductDelete = (prodId) => {
+		setShowModal(true);
+		setProductId(prodId);
+	};
+
+	const handleCancel = () => {
+		setShowModal(false);
+	};
+
+	const handleConfirmAction = () => {
+		setShowModal(false);
+		dispatch(deleteProduct(productId));
 	};
 
 	return (
@@ -130,6 +153,14 @@ const ProductList = () => {
 								))}
 							</tbody>
 						</table>
+						<ConfirmModal
+							title='Delete Confirmation'
+							body='Are you sure? Do you want to delete this Product?'
+							icon={<IoWarningOutline className='h-6 w-6 text-red-600' />}
+							show={showModal}
+							confirmAction={handleConfirmAction}
+							onCancel={handleCancel}
+						/>
 					</div>
 				</div>
 			)}

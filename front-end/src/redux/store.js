@@ -1,6 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import productsSlice from './slices/productsSlice';
 import productDetailsSlice from './slices/productDetailsSlice';
+import productDeleteSlice from './slices/productDeleteSlice';
 import cartSlice from './slices/cartSlice';
 import userLoginSlice from './slices/userLoginSlice';
 import userRegisterSlice from './slices/userRegisterSlice';
@@ -34,6 +35,7 @@ export default configureStore({
 	reducer: {
 		productsList: productsSlice,
 		productDetails: productDetailsSlice,
+		productDelete: productDeleteSlice,
 		cart: cartSlice,
 		userLogin: userLoginSlice,
 		userRegister: userRegisterSlice,
