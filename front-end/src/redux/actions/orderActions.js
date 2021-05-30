@@ -16,7 +16,7 @@ const tostErrorOptions = {
 };
 
 export const createOrder = createAsyncThunk(
-	'orders/create',
+	'orders/createOrder',
 	async (order, { rejectWithValue, getState, dispatch }) => {
 		const {
 			userLogin: { userInfo }
@@ -47,7 +47,7 @@ export const createOrder = createAsyncThunk(
 );
 
 export const getOrderDetails = createAsyncThunk(
-	'orders/details',
+	'orders/getOrderDetails',
 	async (id, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
@@ -74,7 +74,7 @@ export const getOrderDetails = createAsyncThunk(
 );
 
 export const payOrder = createAsyncThunk(
-	'orders/pay',
+	'orders/payOrder',
 	async ({ orderId, paymentResult }, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
@@ -106,7 +106,7 @@ export const payOrder = createAsyncThunk(
 );
 
 export const getAuthUserOrders = createAsyncThunk(
-	'orders/self',
+	'orders/getAuthUserOrders',
 	async (_, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }

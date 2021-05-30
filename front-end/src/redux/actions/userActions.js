@@ -70,7 +70,7 @@ export const register = createAsyncThunk(
 );
 
 export const getUserDetails = createAsyncThunk(
-	'users/profile',
+	'users/getUserDetails',
 	async (id, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
@@ -93,7 +93,7 @@ export const getUserDetails = createAsyncThunk(
 );
 
 export const updateUserProfile = createAsyncThunk(
-	'users/profile/update',
+	'users/updateUserProfile',
 	async (user, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
@@ -126,7 +126,7 @@ export const updateUserProfile = createAsyncThunk(
 );
 
 export const listUsers = createAsyncThunk(
-	'users/list',
+	'users/listUsers',
 	async (_, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
@@ -153,7 +153,7 @@ export const listUsers = createAsyncThunk(
 );
 
 export const deleteUser = createAsyncThunk(
-	'users/delete',
+	'users/deleteUser',
 	async (id, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
@@ -180,7 +180,7 @@ export const deleteUser = createAsyncThunk(
 );
 
 export const updateUser = createAsyncThunk(
-	'users/update',
+	'users/updateUser',
 	async (user, { rejectWithValue, getState }) => {
 		const {
 			userLogin: { userInfo }
