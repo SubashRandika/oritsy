@@ -29,8 +29,7 @@ const UserList = () => {
 	}, [dispatch, history, userInfo?.isAdmin, deleteSuccess]);
 
 	const handleUserEdit = (userId) => {
-		console.log('User Edited', userId);
-		setUserId(userId);
+		history.push(`/admin/user/${userId}/edit`);
 	};
 
 	const handleUserDelete = (userId) => {

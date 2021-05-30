@@ -19,6 +19,7 @@ import OrderDetails from './pages/OrderDetails';
 import UserList from './pages/UserList';
 
 import 'react-toastify/dist/ReactToastify.css';
+import UserEdit from './pages/UserEdit';
 
 const App = () => {
 	const [clientId, setClientId] = useState('');
@@ -68,6 +69,9 @@ const App = () => {
 						</PrivateRoute>
 						<PrivateRoute exact path='/admin/user-list'>
 							<UserList />
+						</PrivateRoute>
+						<PrivateRoute exact path='/admin/user/:id/edit'>
+							<UserEdit />
 						</PrivateRoute>
 						<Route exact path='/'>
 							<Home />

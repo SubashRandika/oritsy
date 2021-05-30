@@ -1,0 +1,16 @@
+.toggle-path {
+	@apply transition-all duration-300 ease-in-out;
+}
+
+.toggle-circle {
+	top: 0.13rem;
+	left: 0.13rem;
+	@apply transition-all duration-300 ease-in-out;
+}
+
+input:checked ~ .toggle-circle {
+	@apply transform translate-x-full;
+}
+input:checked ~ .toggle-path {
+	@apply bg-red-400;
+}
