@@ -2,8 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slices/userLoginSlice';
-import { fetchProductDetails } from '../redux/actions/productActions';
+import {
+	fetchProductDetails,
+	updateProduct
+} from '../redux/actions/productActions';
 import { productDetailsSelector } from '../redux/slices/productDetailsSlice';
+import {
+	productUpdateSelector,
+	resetProductUpdate
+} from '../redux/slices/productUpdateSlice';
 import Loader from '../components/Loader/Loader';
 
 const ProductEdit = () => {
@@ -20,6 +27,9 @@ const ProductEdit = () => {
 		category: '',
 		description: ''
 	});
+	const { loading: isUpdating, success: updateSuccess } = useSelector(
+		productUpdateSelector
+	);
 
 	const handleOnChange = (e) => {
 		setProductInfo({
@@ -34,17 +44,22 @@ const ProductEdit = () => {
 			return;
 		}
 
-		dispatch(fetchProductDetails(productId));
+		if (updateSuccess) {
+			dispatch(resetProductUpdate());
+			history.push('/admin/product-list');
+		} else {
+			dispatch(fetchProductDetails(productId));
 
-		setProductInfo({
-			name: product?.name,
-			price: product?.price,
-			countInStock: product?.countInStock,
-			image: product?.image,
-			brand: product?.brand,
-			category: product?.category,
-			description: product?.description
-		});
+			setProductInfo({
+				name: product?.name,
+				price: product?.price,
+				countInStock: product?.countInStock,
+				image: product?.image,
+				brand: product?.brand,
+				category: product?.category,
+				description: product?.description
+			});
+		}
 	}, [
 		dispatch,
 		error,
@@ -56,12 +71,25 @@ const ProductEdit = () => {
 		product?.image,
 		product?.name,
 		product?.price,
-		productId
+		productId,
+		updateSuccess
 	]);
 
 	const handleUpdateProduct = (e) => {
 		e.preventDefault();
-        
+
+		dispatch(
+			updateProduct({
+				_id: productId,
+				name: productInfo?.name,
+				price: productInfo?.price,
+				countInStock: productInfo?.countInStock,
+				image: productInfo?.image,
+				brand: productInfo?.brand,
+				category: productInfo?.category,
+				description: productInfo?.description
+			})
+		);
 	};
 
 	return (
@@ -107,6 +135,7 @@ const ProductEdit = () => {
 										type='number'
 										name='price'
 										min={0}
+										step='.01'
 										placeholder='Enter Price'
 										value={productInfo.price || 0}
 										onChange={handleOnChange}
@@ -199,7 +228,33 @@ const ProductEdit = () => {
 									className='w-60 bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white text-lg font-semibold px-6 py-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
 									type='submit'
 								>
-									Update
+									{isUpdating ? (
+										<div className='flex justify-center items-center'>
+											<svg
+												className='animate-spin h-5 w-5 text-white mr-3'
+												xmlns='http://www.w3.org/2000/svg'
+												fill='none'
+												viewBox='0 0 24 24'
+											>
+												<circle
+													className='opacity-25'
+													cx='12'
+													cy='12'
+													r='10'
+													stroke='currentColor'
+													strokeWidth='4'
+												></circle>
+												<path
+													className='opacity-75'
+													fill='currentColor'
+													d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+												></path>
+											</svg>
+											<p>Updating</p>
+										</div>
+									) : (
+										<p>Update</p>
+									)}
 								</button>
 							</div>
 						</form>

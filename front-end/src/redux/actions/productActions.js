@@ -85,3 +85,35 @@ export const createProduct = createAsyncThunk(
 		}
 	}
 );
+
+export const updateProduct = createAsyncThunk(
+	'products/updateProduct',
+	async (product, { rejectWithValue, getState }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.put(
+				`/api/products/${product._id}`,
+				product,
+				config
+			);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			toast(message, tostErrorOptions);
+
+			return rejectWithValue({ message });
+		}
+	}
+);
