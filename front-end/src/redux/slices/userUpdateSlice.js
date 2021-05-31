@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const userUpdateSlice = createSlice({
-	name: 'userRegister',
+	name: 'userUpdate',
 	initialState,
 	reducers: {
 		resetUserUpdate: (state) => initialState
