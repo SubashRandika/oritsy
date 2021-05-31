@@ -17,10 +17,11 @@ import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import OrderDetails from './pages/OrderDetails';
 import UserList from './pages/UserList';
-
-import 'react-toastify/dist/ReactToastify.css';
 import UserEdit from './pages/UserEdit';
 import ProductList from './pages/ProductList';
+import ProductEdit from './pages/ProductEdit';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 	const [clientId, setClientId] = useState('');
@@ -76,6 +77,9 @@ const App = () => {
 						</PrivateRoute>
 						<PrivateRoute exact path='/admin/product-list'>
 							<ProductList />
+						</PrivateRoute>
+						<PrivateRoute exact path='/admin/product/:id/edit'>
+							<ProductEdit />
 						</PrivateRoute>
 						<Route exact path='/'>
 							<Home />

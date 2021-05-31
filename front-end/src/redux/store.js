@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import productsSlice from './slices/productsSlice';
 import productDetailsSlice from './slices/productDetailsSlice';
 import productDeleteSlice from './slices/productDeleteSlice';
+import productCreateSlice from './slices/productCreateSlice';
 import cartSlice from './slices/cartSlice';
 import userLoginSlice from './slices/userLoginSlice';
 import userRegisterSlice from './slices/userRegisterSlice';
@@ -36,6 +37,7 @@ export default configureStore({
 		productsList: productsSlice,
 		productDetails: productDetailsSlice,
 		productDelete: productDeleteSlice,
+		productCreate: productCreateSlice,
 		cart: cartSlice,
 		userLogin: userLoginSlice,
 		userRegister: userRegisterSlice,
