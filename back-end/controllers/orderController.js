@@ -94,9 +94,21 @@ const getAuthUserOrders = asyncHandler(async (req, res) => {
 	res.status(200).json(orders);
 });
 
+/**
+ * @desc    Get all orders
+ * @route   GET /api/orders
+ * @access  Private/Admin
+ */
+const getAllOrders = asyncHandler(async (req, res) => {
+	const orders = await Order.find({});
+
+	res.status(200).json(orders);
+});
+
 export {
 	createOrder,
 	getOrderById,
 	updateOrderToPaidStatus,
-	getAuthUserOrders
+	getAuthUserOrders,
+	getAllOrders
 };

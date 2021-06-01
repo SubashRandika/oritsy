@@ -4,12 +4,16 @@ import {
 	createOrder,
 	getAuthUserOrders,
 	getOrderById,
-	updateOrderToPaidStatus
+	updateOrderToPaidStatus,
+	getAllOrders
 } from '../controllers/orderController.js';
-import { secure } from '../middlewares/auth.js';
+import { adminOnly, secure } from '../middlewares/auth.js';
 
 // all order related routes
-router.route('/').post(secure, createOrder);
+router
+	.route('/')
+	.post(secure, createOrder)
+	.get(secure, adminOnly, getAllOrders);
 router.route('/self').get(secure, getAuthUserOrders);
 router.route('/:id').get(secure, getOrderById);
 router.route('/:id/pay').put(secure, updateOrderToPaidStatus);
