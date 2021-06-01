@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { FiUpload } from 'react-icons/fi';
+import axios from 'axios';
 import { logout } from '../redux/slices/userLoginSlice';
 import {
 	fetchProductDetails,
@@ -30,6 +32,7 @@ const ProductEdit = () => {
 	const { loading: isUpdating, success: updateSuccess } = useSelector(
 		productUpdateSelector
 	);
+	const [uploading, setUploading] = useState(false);
 
 	const handleOnChange = (e) => {
 		setProductInfo({
@@ -92,6 +95,31 @@ const ProductEdit = () => {
 		);
 	};
 
+	const handleFileUpload = async (e) => {
+		const file = e.target.files[0];
+		const formData = new FormData();
+
+		formData.append('image', file);
+		setUploading(true);
+
+		try {
+			const config = {
+				'Content-Type': 'multipart/form-data'
+			};
+
+			const { data } = await axios.post('/api/upload', formData, config);
+
+			setProductInfo({
+				...productInfo,
+				image: data
+			});
+			setUploading(false);
+		} catch (error) {
+			console.error(error);
+			setUploading(false);
+		}
+	};
+
 	return (
 		<main className='container m-auto h-full my-6'>
 			{loading ? (
@@ -100,7 +128,7 @@ const ProductEdit = () => {
 					<div className='text-lg text-gray-500 font-semibold'>Loading...</div>
 				</div>
 			) : (
-				<div className='max-w-lg mx-auto my-6'>
+				<div className='max-w-xl mx-auto my-6'>
 					<h1 className='my-8 text-3xl text-center font-bold text-gray-700'>
 						Update Product
 					</h1>
@@ -166,14 +194,53 @@ const ProductEdit = () => {
 								>
 									Image
 								</label>
-								<input
-									className='w-full px-3 py-2 border border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500'
-									type='text'
-									name='image'
-									placeholder='Enter image URL or path'
-									value={productInfo.image || ''}
-									onChange={handleOnChange}
-								/>
+								<div className='flex items-center'>
+									<input
+										className='w-full px-3 py-2 border border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500 mr-4'
+										type='text'
+										name='image'
+										placeholder='Enter image URL or path'
+										value={productInfo.image || ''}
+										onChange={handleOnChange}
+									/>
+									<label className='w-44 bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white text-md flex items-center justify-around font-semibold px-6 py-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer'>
+										{uploading ? (
+											<div className='flex justify-center items-center'>
+												<svg
+													className='animate-spin h-5 w-5 text-white mr-3'
+													xmlns='http://www.w3.org/2000/svg'
+													fill='none'
+													viewBox='0 0 24 24'
+												>
+													<circle
+														className='opacity-25'
+														cx='12'
+														cy='12'
+														r='10'
+														stroke='currentColor'
+														strokeWidth='4'
+													></circle>
+													<path
+														className='opacity-75'
+														fill='currentColor'
+														d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+													></path>
+												</svg>
+												<p>Uploading</p>
+											</div>
+										) : (
+											<>
+												<FiUpload />
+												<span>Browse</span>
+											</>
+										)}
+										<input
+											type='file'
+											className='hidden'
+											onChange={handleFileUpload}
+										/>
+									</label>
+								</div>
 							</div>
 							<div className='flex flex-col mb-6'>
 								<label
