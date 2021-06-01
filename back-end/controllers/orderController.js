@@ -100,7 +100,7 @@ const getAuthUserOrders = asyncHandler(async (req, res) => {
  * @access  Private/Admin
  */
 const getAllOrders = asyncHandler(async (req, res) => {
-	const orders = await Order.find({});
+	const orders = await Order.find({}).populate('user', 'id name');
 
 	res.status(200).json(orders);
 });
