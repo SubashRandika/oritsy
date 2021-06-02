@@ -292,11 +292,10 @@ const Profile = () => {
 													)}
 												</td>
 												<td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-													<Link
-														to={`/order/${order._id}`}
-														className='text-blue-500 font-semibold hover:underline'
-													>
-														Details
+													<Link to={`/order/${order._id}`}>
+														<button className='bg-transparent hover:bg-yellow-500 text-yellow-600 font-semibold hover:font-bold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent'>
+															Details
+														</button>
 													</Link>
 												</td>
 											</tr>
