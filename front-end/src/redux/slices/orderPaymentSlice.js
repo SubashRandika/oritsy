@@ -4,7 +4,7 @@ import { payOrder } from '../actions/orderActions.js';
 const initialState = {};
 
 const orderPaymentSlice = createSlice({
-	name: 'payOrder',
+	name: 'orderPayment',
 	initialState,
 	reducers: {
 		resetPayOrder: (state) => initialState
