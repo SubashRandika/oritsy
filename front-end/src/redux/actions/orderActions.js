@@ -131,3 +131,30 @@ export const getAuthUserOrders = createAsyncThunk(
 		}
 	}
 );
+
+export const listOrders = createAsyncThunk(
+	'users/listOrders',
+	async (_, { rejectWithValue, getState }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.get('/api/orders', config);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			toast(message, tostErrorOptions);
+
+			return rejectWithValue({ message });
+		}
+	}
+);

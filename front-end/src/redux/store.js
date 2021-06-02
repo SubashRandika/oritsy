@@ -16,6 +16,7 @@ import createOrderSlice from './slices/createOrderSlice';
 import orderDetailsSlice from './slices/orderDetailsSlice';
 import orderPaymentSlice from './slices/orderPaymentSlice';
 import selfOrdersListSlice from './slices/selfOrdersListSlice';
+import orderListSlice from './slices/orderListSlice';
 
 const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
@@ -51,7 +52,8 @@ export default configureStore({
 		createOrder: createOrderSlice,
 		orderDetails: orderDetailsSlice,
 		orderPayment: orderPaymentSlice,
-		selfOrders: selfOrdersListSlice
+		selfOrders: selfOrdersListSlice,
+		orderList: orderListSlice
 	},
 	preloadedState: {
 		cart: {

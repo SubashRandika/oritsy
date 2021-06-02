@@ -20,6 +20,7 @@ import UserList from './pages/UserList';
 import UserEdit from './pages/UserEdit';
 import ProductList from './pages/ProductList';
 import ProductEdit from './pages/ProductEdit';
+import OrderList from './pages/OrderList';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -80,6 +81,9 @@ const App = () => {
 						</PrivateRoute>
 						<PrivateRoute exact path='/admin/product/:id/edit'>
 							<ProductEdit />
+						</PrivateRoute>
+						<PrivateRoute exact path='/admin/order-list'>
+							<OrderList />
 						</PrivateRoute>
 						<Route exact path='/'>
 							<Home />
