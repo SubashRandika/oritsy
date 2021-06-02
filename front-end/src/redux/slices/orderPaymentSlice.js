@@ -7,9 +7,7 @@ const orderPaymentSlice = createSlice({
 	name: 'payOrder',
 	initialState,
 	reducers: {
-		clearPayOrder: (state, actions) => {
-			state = {};
-		}
+		resetPayOrder: (state) => initialState
 	},
 	extraReducers: {
 		[payOrder.pending]: (state) => {
@@ -28,6 +26,6 @@ const orderPaymentSlice = createSlice({
 
 export const orderPaymentSelector = (state) => state.orderPayment;
 
-export const { clearPayOrder } = orderPaymentSlice.actions;
+export const { resetPayOrder } = orderPaymentSlice.actions;
 
 export default orderPaymentSlice.reducer;
