@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import {
 	cartSelector,
 	storeShippingAddressDetails
 } from '../redux/slices/cartSlice';
 import CheckoutStepper from '../components/CheckoutStepper/CheckoutStepper';
+
+const tostOptions = {
+	position: 'top-center',
+	autoClose: '10000',
+	type: 'error'
+};
 
 const Shipping = () => {
 	const { shippingAddress } = useSelector(cartSelector);
@@ -20,6 +27,27 @@ const Shipping = () => {
 
 	const handleShippingAddressSave = (e) => {
 		e.preventDefault();
+
+		if (!shippingInfo?.address) {
+			toast('Address field is required', tostOptions);
+			return;
+		}
+
+		if (!shippingInfo?.city) {
+			toast('City field is required', tostOptions);
+			return;
+		}
+
+		if (!shippingInfo?.postalCode) {
+			toast('Postal Code field is required', tostOptions);
+			return;
+		}
+
+		if (!shippingInfo?.country) {
+			toast('Country field is required', tostOptions);
+			return;
+		}
+
 		dispatch(storeShippingAddressDetails({ ...shippingInfo }));
 		history.push('/payment');
 	};

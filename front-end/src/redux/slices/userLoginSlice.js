@@ -9,6 +9,7 @@ const userLoginSlice = createSlice({
 	reducers: {
 		logout: (state, { payload }) => {
 			localStorage.removeItem('userInfo');
+			localStorage.removeItem('shippingAddress');
 			state.userInfo = null;
 			payload.push('/');
 		}
