@@ -84,6 +84,27 @@ const updateOrderToPaidStatus = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Update order to delivered status. Only for admin.
+ * @route   PUT /api/orders/:id/deliver
+ * @access  Private/Admin
+ */
+const updateOrderToDeliverStatus = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+
+	if (!order) {
+		res.status(404);
+		throw new Error('Order does not exist');
+	}
+
+	order.isDelivered = true;
+	order.deliveredAt = Date.now();
+
+	const updatedOrder = await order.save();
+
+	res.status(200).json(updatedOrder);
+});
+
+/**
  * @desc    Get authenticated user orders
  * @route   GET /api/orders/self
  * @access  Private
@@ -109,6 +130,7 @@ export {
 	createOrder,
 	getOrderById,
 	updateOrderToPaidStatus,
+	updateOrderToDeliverStatus,
 	getAuthUserOrders,
 	getAllOrders
 };

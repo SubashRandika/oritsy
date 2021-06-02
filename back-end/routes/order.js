@@ -5,6 +5,7 @@ import {
 	getAuthUserOrders,
 	getOrderById,
 	updateOrderToPaidStatus,
+	updateOrderToDeliverStatus,
 	getAllOrders
 } from '../controllers/orderController.js';
 import { adminOnly, secure } from '../middlewares/auth.js';
@@ -17,5 +18,6 @@ router
 router.route('/self').get(secure, getAuthUserOrders);
 router.route('/:id').get(secure, getOrderById);
 router.route('/:id/pay').put(secure, updateOrderToPaidStatus);
+router.route('/:id/deliver').put(secure, adminOnly, updateOrderToDeliverStatus);
 
 export default router;
