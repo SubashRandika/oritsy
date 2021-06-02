@@ -9,9 +9,21 @@ import {
 } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
-import { getOrderDetails, payOrder } from '../redux/actions/orderActions';
+import {
+	getOrderDetails,
+	payOrder,
+	deliverOrder
+} from '../redux/actions/orderActions';
 import { orderDetailsSelector } from '../redux/slices/orderDetailsSlice';
-import { orderPaymentSelector } from '../redux/slices/orderPaymentSlice';
+import {
+	orderPaymentSelector,
+	resetPayOrder
+} from '../redux/slices/orderPaymentSlice';
+import {
+	orderDeliverSelector,
+	resetDeliverOrder
+} from '../redux/slices/orderDeliverSlice';
+import { userLoginSelector } from '../redux/slices/userLoginSlice';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
 
@@ -27,6 +39,8 @@ const OrderDetails = () => {
 	const dispatch = useDispatch();
 	const { order, loading } = useSelector(orderDetailsSelector);
 	const { paySuccess } = useSelector(orderPaymentSelector);
+	const { isDeliver, deliverSuccess } = useSelector(orderDeliverSelector);
+	const { userInfo } = useSelector(userLoginSelector);
 	const [{ isPending }] = usePayPalScriptReducer();
 
 	const withDecimal = (value) => {
@@ -88,8 +102,16 @@ const OrderDetails = () => {
 			fetchPaypalClientId();
 		}
 
-		dispatch(getOrderDetails(orderId));
-	}, [clientId, dispatch, orderId, paySuccess]);
+		if (!order || paySuccess || deliverSuccess || order._id !== orderId) {
+			dispatch(resetPayOrder());
+			dispatch(resetDeliverOrder());
+			dispatch(getOrderDetails(orderId));
+		}
+	}, [clientId, dispatch, order, orderId, paySuccess, deliverSuccess]);
+
+	const handleMarkDelivered = () => {
+		dispatch(deliverOrder(orderId));
+	};
 
 	return (
 		<main className='container m-auto h-full my-6'>
@@ -276,6 +298,42 @@ const OrderDetails = () => {
 												/>
 											)}
 										</PayPalScriptProvider>
+									</div>
+								)}
+								{userInfo?.isAdmin && order?.isPaid && !order?.isDelivered && (
+									<div className='p-6 w-full border-t border-gray-300 flex justify-center'>
+										<button
+											className='flex items-center bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white font-semibold px-8 py-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+											onClick={handleMarkDelivered}
+										>
+											{isDeliver ? (
+												<div className='flex justify-center items-center'>
+													<svg
+														className='animate-spin h-5 w-5 text-white mr-3'
+														xmlns='http://www.w3.org/2000/svg'
+														fill='none'
+														viewBox='0 0 24 24'
+													>
+														<circle
+															className='opacity-25'
+															cx='12'
+															cy='12'
+															r='10'
+															stroke='currentColor'
+															strokeWidth='4'
+														></circle>
+														<path
+															className='opacity-75'
+															fill='currentColor'
+															d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+														></path>
+													</svg>
+													<p>Marking Deliver</p>
+												</div>
+											) : (
+												<span>Mark As Delivered</span>
+											)}
+										</button>
 									</div>
 								)}
 							</div>

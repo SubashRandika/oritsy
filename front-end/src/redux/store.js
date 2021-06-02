@@ -15,6 +15,7 @@ import userUpdateSlice from './slices/userUpdateSlice';
 import createOrderSlice from './slices/createOrderSlice';
 import orderDetailsSlice from './slices/orderDetailsSlice';
 import orderPaymentSlice from './slices/orderPaymentSlice';
+import orderDeliverSlice from './slices/orderDeliverSlice';
 import selfOrdersListSlice from './slices/selfOrdersListSlice';
 import orderListSlice from './slices/orderListSlice';
 
@@ -52,6 +53,7 @@ export default configureStore({
 		createOrder: createOrderSlice,
 		orderDetails: orderDetailsSlice,
 		orderPayment: orderPaymentSlice,
+		orderDeliver: orderDeliverSlice,
 		selfOrders: selfOrdersListSlice,
 		orderList: orderListSlice
 	},
