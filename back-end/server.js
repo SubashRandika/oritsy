@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import path from 'path';
+import morgan from 'morgan';
 import connectDB from '../back-end/config/database.js';
 import productRoutes from './routes/product.js';
 import userRoutes from './routes/user.js';
@@ -20,6 +21,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+	app.use(morgan('dev'));
+}
 
 app.use(express.json());
 
