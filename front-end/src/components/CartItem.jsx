@@ -65,7 +65,7 @@ const CartItem = ({ cartItem }) => {
 			</div>
 			<div className='w-36 flex-none'>
 				<button
-					className='flex items-center bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white font-semibold px-6 py-2 mr-5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+					className='flex items-center bg-transparent hover:bg-red-400 text-red-500 font-semibold hover:font-bold hover:text-white py-2 px-4 border border-red-400 hover:border-transparent transition-all duration-300 ease-in-out'
 					onClick={handleRemoveFromCart}
 				>
 					<span className='mr-3 uppercase'>Delete</span>
