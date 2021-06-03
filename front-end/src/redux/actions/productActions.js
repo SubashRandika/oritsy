@@ -117,3 +117,35 @@ export const updateProduct = createAsyncThunk(
 		}
 	}
 );
+
+export const reviewProduct = createAsyncThunk(
+	'products/reviewProduct',
+	async ({ productId, review }, { rejectWithValue, getState }) => {
+		const {
+			userLogin: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		};
+
+		try {
+			const { data } = await axios.post(
+				`/api/products/${productId}/reviews`,
+				review,
+				config
+			);
+
+			return data;
+		} catch (error) {
+			const { message } = error.response.data;
+
+			toast(message, tostErrorOptions);
+
+			return rejectWithValue({ message });
+		}
+	}
+);

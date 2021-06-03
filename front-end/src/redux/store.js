@@ -4,6 +4,7 @@ import productDetailsSlice from './slices/productDetailsSlice';
 import productDeleteSlice from './slices/productDeleteSlice';
 import productCreateSlice from './slices/productCreateSlice';
 import productUpdateSlice from './slices/productUpdateSlice';
+import productReviewSlice from './slices/productReviewSlice';
 import cartSlice from './slices/cartSlice';
 import userLoginSlice from './slices/userLoginSlice';
 import userRegisterSlice from './slices/userRegisterSlice';
@@ -42,6 +43,7 @@ export default configureStore({
 		productDelete: productDeleteSlice,
 		productCreate: productCreateSlice,
 		productUpdate: productUpdateSlice,
+		productReview: productReviewSlice,
 		cart: cartSlice,
 		userLogin: userLoginSlice,
 		userRegister: userRegisterSlice,
