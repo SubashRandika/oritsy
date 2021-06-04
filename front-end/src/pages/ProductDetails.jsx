@@ -1,32 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FiMail, FiChevronDown } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
+import { FaStar, FaRegStar, FaCommentSlash } from 'react-icons/fa';
 import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { default as RatingStar } from 'react-rating';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { userLoginSelector } from '../redux/slices/userLoginSlice';
 import { fetchProductDetails } from '../redux/actions/productActions';
 import { productDetailsSelector } from '../redux/slices/productDetailsSlice';
+import {
+	productReviewSelector,
+	resetProductReview
+} from '../redux/slices/productReviewSlice';
 import { addToCart } from '../redux/actions/cartActions';
+import { reviewProduct } from '../redux/actions/productActions';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
 
+dayjs.extend(relativeTime);
+
 const ProductDetails = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const productDetails = useSelector(productDetailsSelector);
+	const { userInfo } = useSelector(userLoginSelector);
+	const { product, loading, error } = useSelector(productDetailsSelector);
+	const { loading: isReviewing, success } = useSelector(productReviewSelector);
+	const [reviewInfo, setReviewInfo] = useState({
+		rating: 0,
+		comment: ''
+	});
 	const [quantity, setQuantity] = useState(1);
-	const { product, loading, error } = productDetails;
 	const { id } = useParams();
 
 	useEffect(() => {
+		if (success) {
+			setReviewInfo({
+				rating: 0,
+				comment: ''
+			});
+		}
+
 		dispatch(fetchProductDetails(id));
-	}, [dispatch, id]);
+		resetProductReview();
+	}, [dispatch, id, success]);
 
 	const handleAddToCart = () => {
 		dispatch(addToCart({ id, quantity }));
 		history.push('/cart');
+	};
+
+	const handleReviewSubmit = (e) => {
+		e.preventDefault();
+		dispatch(
+			reviewProduct({
+				productId: id,
+				review: {
+					rating: reviewInfo.rating,
+					comment: reviewInfo.comment
+				}
+			})
+		);
+	};
+
+	const handleRatingChange = (value) => {
+		setReviewInfo({
+			...reviewInfo,
+			rating: value
+		});
+	};
+
+	const handleCommentChange = (e) => {
+		setReviewInfo({
+			...reviewInfo,
+			comment: e.target.value
+		});
 	};
 
 	return (
@@ -149,6 +201,133 @@ const ProductDetails = () => {
 										<GiShoppingCart />
 									</span>
 								</button>
+							</div>
+						</div>
+					</div>
+					<div className='p-10'>
+						<h1 className='text-2xl font-bold border-b pb-2'>Reviews</h1>
+						<div className='flex mt-8'>
+							<div className='w-1/2'>
+								{userInfo ? (
+									<form onSubmit={handleReviewSubmit}>
+										<div className='flex flex-col mb-6'>
+											<label
+												className='font-semibold text-sm text-gray-600 mb-4'
+												htmlFor='rating'
+											>
+												Rating
+											</label>
+											<RatingStar
+												emptySymbol={
+													<FaRegStar className='text-gray-300 text-3xl' />
+												}
+												fullSymbol={
+													<FaStar className='text-yellow-500 text-3xl' />
+												}
+												initialRating={reviewInfo.rating}
+												onChange={handleRatingChange}
+											/>
+										</div>
+										<div className='flex flex-col mb-6'>
+											<label
+												className='font-semibold text-sm text-gray-600 mb-2'
+												htmlFor='comment'
+											>
+												Comment
+											</label>
+											<textarea
+												className='w-full px-3 py-2 border border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500'
+												name='comment'
+												rows={3}
+												placeholder='Enter your review comment here'
+												value={reviewInfo.comment || ''}
+												onChange={handleCommentChange}
+											/>
+										</div>
+										<div className='mt-10 flex justify-end'>
+											<button
+												className='w-40 bg-gradient-to-r from-yellow-400 via-yellow-500 to-red-400 text-white text-lg font-semibold px-6 py-1.5 shadow-md hover:shadow-lg transition duration-300 ease-in-out'
+												type='submit'
+											>
+												{isReviewing ? (
+													<div className='flex justify-center items-center'>
+														<svg
+															className='animate-spin h-5 w-5 text-white mr-3'
+															xmlns='http://www.w3.org/2000/svg'
+															fill='none'
+															viewBox='0 0 24 24'
+														>
+															<circle
+																className='opacity-25'
+																cx='12'
+																cy='12'
+																r='10'
+																stroke='currentColor'
+																strokeWidth='4'
+															></circle>
+															<path
+																className='opacity-75'
+																fill='currentColor'
+																d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+															></path>
+														</svg>
+														<p>Submitting</p>
+													</div>
+												) : (
+													<p>Submit</p>
+												)}
+											</button>
+										</div>
+									</form>
+								) : (
+									<div className='h-56 flex justify-center items-center text-lg'>
+										<h1>
+											Please&nbsp;
+											<Link
+												className='text-blue-400 font-semibold hover:underline'
+												to='/signin'
+											>
+												sign in
+											</Link>
+											&nbsp;to write your review now.
+										</h1>
+									</div>
+								)}
+							</div>
+							<div className='w-1/2 px-20'>
+								{product.reviews.length === 0 && (
+									<div className='h-56 flex flex-col justify-center items-center'>
+										<FaCommentSlash className='text-6xl text-gray-200' />
+										<h2 className='text-2xl font-semibold py-2'>
+											No reviews yet for this product.
+										</h2>
+									</div>
+								)}
+								{product.reviews.map((review) => (
+									<div key={review._id} className='flex flex-col border-b py-4'>
+										<div className='flex'>
+											<RatingStar
+												readonly
+												emptySymbol={
+													<FaRegStar className='text-gray-300 text-xl' />
+												}
+												fullSymbol={
+													<FaStar className='text-yellow-500 text-xl' />
+												}
+												initialRating={review.rating}
+											/>
+											<h1 className='px-4 text-gray-700'>by {review.name},</h1>
+											<h1 className='text-sm pt-0.5 text-gray-400'>
+												{dayjs().diff(dayjs(review.createdAt), 'd') >= 1
+													? dayjs(review.createdAt).format(
+															'MMMM D, YYYY h:mm a'
+													  )
+													: dayjs(review.createdAt).fromNow()}
+											</h1>
+										</div>
+										<p className='mt-3'>{review.comment}</p>
+									</div>
+								))}
 							</div>
 						</div>
 					</div>

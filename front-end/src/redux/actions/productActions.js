@@ -8,6 +8,12 @@ const tostErrorOptions = {
 	type: 'error'
 };
 
+const tostSuccessOptions = {
+	position: 'top-center',
+	autoClose: '10000',
+	type: 'success'
+};
+
 export const fetchProducts = createAsyncThunk(
 	'products/fetchProducts',
 	async (_, { rejectWithValue }) => {
@@ -138,6 +144,8 @@ export const reviewProduct = createAsyncThunk(
 				review,
 				config
 			);
+
+			toast(data.message, tostSuccessOptions);
 
 			return data;
 		} catch (error) {

@@ -15,8 +15,7 @@ const productReviewSlice = createSlice({
 		},
 		[reviewProduct.fulfilled]: (state, { payload }) => {
 			state.loading = false;
-			state.isSuccess = true;
-			state.success = payload?.message;
+			state.success = true;
 		},
 		[reviewProduct.rejected]: (state, { payload }) => {
 			state.loading = false;
