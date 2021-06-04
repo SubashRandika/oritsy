@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { GiShoppingCart } from 'react-icons/gi';
 import { toast } from 'react-toastify';
-import Rating from './Rating';
+import Rating from 'react-rating';
 import { addToCart } from '../redux/actions/cartActions';
 import { cartSelector } from '../redux/slices/cartSlice';
+import { FaRegStar, FaStar } from 'react-icons/fa';
 
 const tostOptions = {
 	position: 'top-center',
@@ -68,11 +69,12 @@ const ProductCard = ({ product }) => {
 					</span>
 					<div className='flex flex-col items-center mt-1'>
 						<Rating
-							value={product.rating}
-							text={`${product.numReviews} reviews`}
-							ratingStyle={`text-yellow-500 text-lg`}
-							textStyle={`text-gray-500 my-2`}
+							readonly
+							emptySymbol={<FaRegStar className='text-gray-300 text-xl' />}
+							fullSymbol={<FaStar className='text-yellow-500 text-xl' />}
+							initialRating={product.rating}
 						/>
+						<span className='text-gray-500 my-2'>{`${product.numReviews} reviews`}</span>
 					</div>
 				</div>
 			</div>

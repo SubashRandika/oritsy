@@ -6,7 +6,7 @@ import { GiShoppingCart } from 'react-icons/gi';
 import { FaStar, FaRegStar, FaCommentSlash } from 'react-icons/fa';
 import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { default as RatingStar } from 'react-rating';
+import Rating from 'react-rating';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { userLoginSelector } from '../redux/slices/userLoginSlice';
@@ -18,7 +18,6 @@ import {
 } from '../redux/slices/productReviewSlice';
 import { addToCart } from '../redux/actions/cartActions';
 import { reviewProduct } from '../redux/actions/productActions';
-import Rating from '../components/Rating';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
 
@@ -119,11 +118,15 @@ const ProductDetails = () => {
 							<div className='flex items-center divide-x-2 divide-gray-300'>
 								<div className='flex items-center py-2 pr-5'>
 									<Rating
-										value={product?.rating}
-										text={`${product?.numReviews} reviews`}
-										ratingStyle={`text-yellow-500 text-2xl`}
-										textStyle={`text-lg text-gray-500 ml-5`}
+										className='pt-1'
+										readonly
+										emptySymbol={
+											<FaRegStar className='text-gray-300 text-2xl' />
+										}
+										fullSymbol={<FaStar className='text-yellow-500 text-2xl' />}
+										initialRating={product?.rating}
 									/>
+									<span className='text-lg text-gray-500 ml-5'>{`${product?.numReviews} reviews`}</span>
 								</div>
 								<div className='flex items-center pl-5'>
 									<h2 className='text-blue-400 mr-4'>Share</h2>
@@ -217,7 +220,7 @@ const ProductDetails = () => {
 											>
 												Rating
 											</label>
-											<RatingStar
+											<Rating
 												emptySymbol={
 													<FaRegStar className='text-gray-300 text-3xl' />
 												}
@@ -306,7 +309,7 @@ const ProductDetails = () => {
 								{product.reviews.map((review) => (
 									<div key={review._id} className='flex flex-col border-b py-4'>
 										<div className='flex'>
-											<RatingStar
+											<Rating
 												readonly
 												emptySymbol={
 													<FaRegStar className='text-gray-300 text-xl' />
