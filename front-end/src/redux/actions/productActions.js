@@ -16,9 +16,9 @@ const tostSuccessOptions = {
 
 export const fetchProducts = createAsyncThunk(
 	'products/fetchProducts',
-	async (_, { rejectWithValue }) => {
+	async ({ keyword }, { rejectWithValue }) => {
 		try {
-			const { data } = await axios.get('/api/products');
+			const { data } = await axios.get(`/api/products?keyword=${keyword}`);
 			return data;
 		} catch (error) {
 			return rejectWithValue(error.response.data);

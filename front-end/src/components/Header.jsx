@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { FaOpencart } from 'react-icons/fa';
+import { FaOpencart, FaSearch } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import { GiShoppingCart } from 'react-icons/gi';
 import { cartSelector } from '../redux/slices/cartSlice';
@@ -14,6 +14,7 @@ const Header = () => {
 	const { cartItems } = useSelector(cartSelector);
 	const { userInfo } = useSelector(userLoginSelector);
 	const history = useHistory();
+	const [keyword, setKeyword] = useState('');
 
 	const getCartItemsCount = () => {
 		const totalCartItems = cartItems.reduce(
@@ -26,6 +27,15 @@ const Header = () => {
 
 	const logoutHandler = () => {
 		dispatch(logout(history));
+	};
+
+	const handleSearch = (e) => {
+		e.preventDefault();
+		if (keyword.trim()) {
+			history.push(`/search/${keyword}`);
+		} else {
+			history.push('/');
+		}
 	};
 
 	useEffect(() => {
@@ -54,7 +64,23 @@ const Header = () => {
 						Oritsy
 					</div>
 				</Link>
-				<div className='flex-grow'></div>
+				<div className='flex-grow'>
+					<form className='flex mx-48' onSubmit={handleSearch}>
+						<input
+							className='w-full px-3 py-2 border-l border-t border-b border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500'
+							type='text'
+							name='query'
+							placeholder='Search Products...'
+							onChange={(e) => setKeyword(e.target.value)}
+						/>
+						<button
+							className='group w-12 flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 border border-yellow-500 focus:outline-none focus:ring-0 transition-all duration-500 ease-in-out'
+							type='submit'
+						>
+							<FaSearch className='text-xl text-white group-hover:text-2xl transition-all duration-500 ease-in-out' />
+						</button>
+					</form>
+				</div>
 				<div className='flex items-center flex-none'>
 					{userInfo ? (
 						<Dropdown

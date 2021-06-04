@@ -46,6 +46,7 @@ module.exports = {
 	variants: {
 		extend: {
 			scale: ['group-hover'],
+			fontSize: ['group-hover'],
 			opacity: ['disabled'],
 			backgroundColor: ['checked'],
 			boxShadow: ['checked']

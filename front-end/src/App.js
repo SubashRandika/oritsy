@@ -85,6 +85,9 @@ const App = () => {
 						<PrivateRoute exact path='/admin/order-list'>
 							<OrderList />
 						</PrivateRoute>
+						<Route exact path='/search/:keyword'>
+							<Home />
+						</Route>
 						<Route exact path='/'>
 							<Home />
 						</Route>

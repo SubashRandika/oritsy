@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { fetchProducts } from '../redux/actions/productActions';
@@ -11,10 +12,12 @@ const Home = () => {
 	const dispatch = useDispatch();
 	const productsList = useSelector(productsSelector);
 	const { products, loading, error } = productsList;
+	const { keyword } = useParams();
 
 	useEffect(() => {
-		dispatch(fetchProducts());
-	}, [dispatch]);
+		console.log(keyword);
+		dispatch(fetchProducts({ keyword: keyword || '' }));
+	}, [dispatch, keyword]);
 
 	return (
 		<main className='container m-auto py-4 flex-grow'>
