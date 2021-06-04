@@ -25,6 +25,8 @@ const getProductById = asyncHandler(async (req, res) => {
 		throw new Error('Product cannot be found');
 	}
 
+	product.reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
 	res.status(200).json(product);
 });
 
