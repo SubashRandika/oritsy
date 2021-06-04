@@ -15,7 +15,6 @@ const Home = () => {
 	const { keyword } = useParams();
 
 	useEffect(() => {
-		console.log(keyword);
 		dispatch(fetchProducts({ keyword: keyword || '' }));
 	}, [dispatch, keyword]);
 
