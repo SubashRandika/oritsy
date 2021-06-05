@@ -2,9 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchProducts } from '../actions/productActions';
 
 const initialState = {
-	products: [],
-	loading: false,
-	error: null
+	products: []
 };
 
 const productsSlice = createSlice({
@@ -14,12 +12,12 @@ const productsSlice = createSlice({
 		[fetchProducts.pending]: (state) => {
 			state.loading = true;
 			state.products = [];
-			state.error = null;
 		},
 		[fetchProducts.fulfilled]: (state, { payload }) => {
-			state.products = payload;
 			state.loading = false;
-			state.error = null;
+			state.products = payload.products;
+			state.page = payload.page;
+			state.pages = payload.pages;
 		},
 		[fetchProducts.rejected]: (state, { payload }) => {
 			state.loading = false;

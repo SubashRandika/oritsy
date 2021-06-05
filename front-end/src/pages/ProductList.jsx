@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { FaPlus, FaRegTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { IoWarningOutline } from 'react-icons/io5';
@@ -17,6 +17,7 @@ import { productCreateSelector } from '../redux/slices/productCreateSlice';
 import { resetProductCreate } from '../redux/slices/productCreateSlice';
 import Loader from '../components/Loader/Loader';
 import ConfirmModal from '../components/ConfirmModal';
+import Pagination from '../components/Pagination';
 
 const tostOptions = {
 	position: 'top-center',
@@ -30,13 +31,15 @@ const ProductList = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [productId, setProductId] = useState('');
 	const { userInfo } = useSelector(userLoginSelector);
-	const { products, loading, error } = useSelector(productsSelector);
+	const { products, loading, error, page, pages } =
+		useSelector(productsSelector);
 	const { success: deleteSuccess } = useSelector(productDeleteSelector);
 	const {
 		loading: isCreating,
 		success: createSuccess,
 		product: createdProduct
 	} = useSelector(productCreateSelector);
+	const { pageNumber } = useParams();
 
 	useEffect(() => {
 		dispatch(resetProductCreate());
@@ -48,7 +51,7 @@ const ProductList = () => {
 		if (createSuccess) {
 			history.push(`/admin/product/${createdProduct._id}/edit`);
 		} else {
-			dispatch(fetchProducts());
+			dispatch(fetchProducts({ keyword: '', pageNumber: pageNumber || 1 }));
 		}
 
 		if (error) {
@@ -61,7 +64,8 @@ const ProductList = () => {
 		createSuccess,
 		userInfo?.isAdmin,
 		history,
-		createdProduct?._id
+		createdProduct?._id,
+		pageNumber
 	]);
 
 	const handleProductDelete = (prodId) => {
@@ -221,6 +225,9 @@ const ProductList = () => {
 							confirmAction={handleConfirmAction}
 							onCancel={handleCancel}
 						/>
+					</div>
+					<div className='flex justify-center'>
+						<Pagination page={page} pages={pages} isAdmin={true} />
 					</div>
 				</div>
 			)}

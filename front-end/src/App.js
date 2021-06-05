@@ -79,6 +79,9 @@ const App = () => {
 						<PrivateRoute exact path='/admin/product-list'>
 							<ProductList />
 						</PrivateRoute>
+						<PrivateRoute exact path='/admin/product-list/:pageNumber'>
+							<ProductList />
+						</PrivateRoute>
 						<PrivateRoute exact path='/admin/product/:id/edit'>
 							<ProductEdit />
 						</PrivateRoute>
@@ -86,6 +89,12 @@ const App = () => {
 							<OrderList />
 						</PrivateRoute>
 						<Route exact path='/search/:keyword'>
+							<Home />
+						</Route>
+						<Route exact path='/page/:pageNumber'>
+							<Home />
+						</Route>
+						<Route exact path='/search/:keyword/page/:pageNumber'>
 							<Home />
 						</Route>
 						<Route exact path='/'>
