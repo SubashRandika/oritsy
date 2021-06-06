@@ -20,25 +20,27 @@ const Home = () => {
 
 	return (
 		<main className='container m-auto py-3 flex-grow'>
-			<h1 className='text-2xl font-semibold'>Latest Products</h1>
 			{loading ? (
 				<div className='w-full h-full flex flex-col items-center justify-center'>
 					<Loader />
 					<div className='text-lg text-gray-500 font-semibold'>Loading...</div>
 				</div>
 			) : (
-				<div className='flex flex-col'>
-					<div className='grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-5'>
-						{products?.map((product) => (
-							<ProductCard key={product._id} product={product} />
-						))}
+				<>
+					<h1 className='text-2xl font-semibold'>Latest Products</h1>
+					<div className='flex flex-col'>
+						<div className='grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-5'>
+							{products?.map((product) => (
+								<ProductCard key={product._id} product={product} />
+							))}
+						</div>
+						<Pagination
+							page={page}
+							pages={pages}
+							keyword={keyword ? keyword : ''}
+						/>
 					</div>
-					<Pagination
-						page={page}
-						pages={pages}
-						keyword={keyword ? keyword : ''}
-					/>
-				</div>
+				</>
 			)}
 		</main>
 	);
