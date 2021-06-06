@@ -45,9 +45,14 @@ const TopProductsCarousel = ({ products }) => {
 						src={product.image}
 						alt={product.name}
 					/>
-					<h1 className='text-4xl px-6 font-bold text-gray-700 w-96'>
-						{product.name}
-					</h1>
+					<div className='flex flex-col'>
+						<h1 className='text-4xl px-6 font-bold text-gray-700 w-96'>
+							{product.name}
+						</h1>
+						<h1 className='text-3xl px-6 py-4 font-extrabold text-yellow-700 w-96'>
+							$ {product.price}
+						</h1>
+					</div>
 				</Link>
 			))}
 		</Carousel>
