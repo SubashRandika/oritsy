@@ -1,5 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import productsSlice from './slices/productsSlice';
+import productsTopSlice from './slices/productsTopSlice';
 import productDetailsSlice from './slices/productDetailsSlice';
 import productDeleteSlice from './slices/productDeleteSlice';
 import productCreateSlice from './slices/productCreateSlice';
@@ -39,6 +40,7 @@ const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
 export default configureStore({
 	reducer: {
 		productsList: productsSlice,
+		productsTop: productsTopSlice,
 		productDetails: productDetailsSlice,
 		productDelete: productDeleteSlice,
 		productCreate: productCreateSlice,
