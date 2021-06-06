@@ -68,7 +68,7 @@ const Header = () => {
 					<form className='flex mx-48' onSubmit={handleSearch}>
 						<input
 							className='w-full px-3 py-2 border-l border-t border-b border-gray-300 placeholder-gray-300 focus:outline-none focus:ring focus:ring-yellow-100 focus:border-yellow-500'
-							type='text'
+							type='search'
 							name='query'
 							placeholder='Search Products...'
 							onChange={(e) => setKeyword(e.target.value)}
