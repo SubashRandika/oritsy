@@ -1,7 +1,7 @@
 {
 	"name": "oritsy",
 	"version": "1.0.0",
-	"description": "One stop shop for homemade, vintage, and unique hand crafted products for the cheapest prices.",
+	"description": "One stop shop for buy or sell any kind products for the cheapest prices",
 	"main": "server.js",
 	"type": "module",
 	"scripts": {

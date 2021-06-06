@@ -26,6 +26,7 @@ import {
 import { userLoginSelector } from '../redux/slices/userLoginSlice';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert';
+import MetaInfo from '../components/MetaInfo';
 
 const tostOptions = {
 	position: 'top-center',
@@ -122,6 +123,7 @@ const OrderDetails = () => {
 				</div>
 			) : (
 				<>
+					<MetaInfo title='Oritsy | Order Details' />
 					<h2 className='text-4xl text-gray-600 font-bold uppercase mt-4'>
 						Order
 						<span className='font-semibold text-gray-500 pl-4'>

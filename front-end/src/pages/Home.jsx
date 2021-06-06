@@ -11,6 +11,7 @@ import Loader from '../components/Loader/Loader';
 import Pagination from '../components/Pagination';
 import TopProductsCarousel from '../components/TopProductsCarousel';
 import { productsTopSelector } from '../redux/slices/productsTopSlice';
+import MetaInfo from '../components/MetaInfo';
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Home = () => {
 				</div>
 			) : (
 				<>
+					<MetaInfo />
 					{!keyword && <TopProductsCarousel products={topProducts} />}
 					<div className='flex flex-col'>
 						<div className='grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-5'>
