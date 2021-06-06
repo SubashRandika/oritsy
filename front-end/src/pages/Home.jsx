@@ -43,6 +43,7 @@ const Home = () => {
 							))}
 						</div>
 						<Pagination
+							loading={loading}
 							page={page}
 							pages={pages}
 							keyword={keyword ? keyword : ''}

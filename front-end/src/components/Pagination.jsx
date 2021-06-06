@@ -1,8 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const Pagination = ({ page, pages, keyword = '', isAdmin = false }) => {
+const Pagination = ({
+	loading,
+	page,
+	pages,
+	keyword = '',
+	isAdmin = false
+}) => {
 	return (
+		!loading &&
 		pages > 1 && (
 			<nav className='relative z-0 inline-flex rounded-md shadow-sm -space-x-px mt-6 self-center'>
 				{[...Array(pages).keys()].map((x) => (
@@ -27,6 +35,14 @@ const Pagination = ({ page, pages, keyword = '', isAdmin = false }) => {
 			</nav>
 		)
 	);
+};
+
+Pagination.propTypes = {
+	loading: PropTypes.bool,
+	page: PropTypes.number,
+	pages: PropTypes.number,
+	keyword: PropTypes.string,
+	isAdmin: PropTypes.bool
 };
 
 export default Pagination;
