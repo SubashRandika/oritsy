@@ -27,10 +27,11 @@ const TopProductsCarousel = ({ products }) => {
 
 	return (
 		<Carousel
-			className='bg-gradient-to-t from-yellow-50 via-yellow-200 to-yellow-400 p-10'
+			className='bg-gradient-to-t from-yellow-50 via-yellow-200 to-yellow-400 p-12'
 			responsive={responsive}
 			infinite
 			autoPlay
+			showDots
 			autoPlaySpeed={4000}
 		>
 			{products.map((product) => (
