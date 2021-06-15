@@ -28,7 +28,7 @@ const Home = () => {
 	}, [dispatch, keyword, pageNumber]);
 
 	return (
-		<main className='container m-auto py-3 flex-grow'>
+		<main className='mx-32 py-3 flex-grow'>
 			{loading && loadingTop ? (
 				<div className='w-full h-full flex flex-col items-center justify-center'>
 					<Loader />

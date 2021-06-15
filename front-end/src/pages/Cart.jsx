@@ -42,7 +42,7 @@ const Cart = () => {
 	return (
 		<>
 			<MetaInfo title='Oritsy | Shopping Cart' />
-			<main className='container m-auto py-4 h-full'>
+			<main className='mx-32 py-4 h-full'>
 				<h1 className='text-2xl font-semibold'>Shopping Cart</h1>
 				<div className='grid grid-cols-4 gap-8 mt-10'>
 					<div className='col-span-3'>

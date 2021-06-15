@@ -63,7 +63,7 @@ const Shipping = () => {
 	return (
 		<>
 			<MetaInfo title='Oritsy | Shipping' />
-			<main className='container m-auto h-full my-6'>
+			<main className='mx-32 h-full my-6'>
 				<div className='max-w-4xl mx-auto'>
 					<CheckoutStepper stepStatus={['outline', 'active']} />
 				</div>

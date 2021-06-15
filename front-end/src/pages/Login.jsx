@@ -36,7 +36,7 @@ const Login = () => {
 	return (
 		<>
 			<MetaInfo title='Welcome to Oritsy | Sign In' />
-			<div className='container m-auto h-full'>
+			<div className='mx-32 h-full'>
 				<div className='max-w-sm mx-auto mt-28 mb-10'>
 					<div className='text-center'>
 						<h1 className='my-3 text-4xl font-bold text-gray-700'>Sign In</h1>

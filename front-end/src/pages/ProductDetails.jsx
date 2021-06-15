@@ -89,7 +89,7 @@ const ProductDetails = () => {
 					<div className='text-lg text-gray-500 font-semibold'>Loading...</div>
 				</div>
 			) : error ? (
-				<div className='container m-auto h-full'>
+				<div className='mx-32 h-full'>
 					<div className='flex mt-8'>
 						<Alert
 							type='error'
@@ -102,7 +102,7 @@ const ProductDetails = () => {
 			) : (
 				<>
 					<MetaInfo title={`Oritsy | ${product?.name}`} />
-					<main className='container m-auto py-16'>
+					<main className='mx-32 py-16'>
 						<div className='flex'>
 							<div className='flex relative h-96 w-1/2'>
 								<img

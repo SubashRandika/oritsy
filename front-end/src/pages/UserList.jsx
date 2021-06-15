@@ -44,7 +44,7 @@ const UserList = () => {
 	};
 
 	return (
-		<main className='container m-auto h-full my-6'>
+		<main className='mx-32 h-full my-6'>
 			{loading ? (
 				<div className='w-full h-full flex flex-col items-center justify-center'>
 					<Loader />
@@ -53,7 +53,7 @@ const UserList = () => {
 			) : (
 				<>
 					<MetaInfo title='Oritsy | Admin | Users' />
-					<div className='max-w-6xl mx-auto mt-10'>
+					<div className='max-w-8xl mx-auto mt-10'>
 						<h1 className='text-2xl font-semibold mb-6'>Users List</h1>
 						<div className='shadow overflow-hidden border-b border-gray-200'>
 							<table className='min-w-full divide-y divide-gray-200'>

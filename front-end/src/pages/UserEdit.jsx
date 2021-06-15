@@ -83,7 +83,7 @@ const UserEdit = () => {
 	};
 
 	return (
-		<main className='container m-auto h-full'>
+		<main className='mx-32 h-full'>
 			{loading ? (
 				<div className='w-full h-full flex flex-col items-center justify-center'>
 					<Loader />

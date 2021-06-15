@@ -23,7 +23,7 @@ const OrderList = () => {
 	}, [dispatch, history, userInfo?.isAdmin]);
 
 	return (
-		<main className='container m-auto h-full my-6'>
+		<main className='mx-32 h-full my-6'>
 			{loading ? (
 				<div className='w-full h-full flex flex-col items-center justify-center'>
 					<Loader />

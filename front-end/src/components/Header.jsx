@@ -54,7 +54,7 @@ const Header = () => {
 	}, [dispatch, history]);
 
 	return (
-		<header className='container mx-auto h-auto'>
+		<header className='mx-32 h-auto'>
 			<div className='flex items-center h-20'>
 				<Link className='flex items-center flex-none' to='/'>
 					<span className='text-6xl text-gray-500'>
